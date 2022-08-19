@@ -6,10 +6,6 @@ function Login() {
   const [password, setPassword] = useState('');
   const [buttonIsDisabled, setButtonIsDisabled] = useState(true);
 
-  // const buttonEnable = () => {
-
-  // };
-
   useEffect(() => {
     const minPasswordLength = 6;
     const validEmail = (/\S+@\S+\.\S+/i);
@@ -31,6 +27,13 @@ function Login() {
     if (target.name === 'password') {
       setPassword(target.value);
     }
+  };
+
+  const handleClick = async () => {
+    const obj = { email };
+    localStorage.setItem('user', JSON.stringify(obj));
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
   };
 
   return (
@@ -59,6 +62,7 @@ function Login() {
         type="button"
         data-testid="login-submit-btn"
         disabled={ buttonIsDisabled }
+        onClick={ handleClick }
       >
         Entrar
       </button>
