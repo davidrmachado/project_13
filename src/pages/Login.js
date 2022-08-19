@@ -6,7 +6,11 @@ function Login() {
   const [password, setPassword] = useState('');
   const [buttonIsDisabled, setButtonIsDisabled] = useState(true);
 
-  const buttonEnable = () => {
+  // const buttonEnable = () => {
+
+  // };
+
+  useEffect(() => {
     const minPasswordLength = 6;
     const validEmail = (/\S+@\S+\.\S+/i);
     if (
@@ -18,10 +22,6 @@ function Login() {
     } else {
       setButtonIsDisabled(true);
     }
-  };
-
-  useEffect(() => {
-    buttonEnable();
   }, [email, password]);
 
   const handleChange = ({ target }) => {
