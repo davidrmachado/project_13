@@ -1,13 +1,7 @@
-// import React, { useContext, useState } from 'react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import AppContext from '../context/AppContext';
 
 function Login() {
-  // const {
-  //   buttonIsDisabled,
-  //   setButtonIsDisabled,
-  // } = useContext(AppContext);
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [buttonIsDisabled, setButtonIsDisabled] = useState(true);
@@ -16,7 +10,7 @@ function Login() {
     const minPasswordLength = 6;
     const validEmail = (/\S+@\S+\.\S+/i);
     if (
-      password.length >= minPasswordLength
+      password.length > minPasswordLength
       && validEmail.test(email)
       && email.includes('.com')
     ) {
@@ -26,6 +20,10 @@ function Login() {
     }
   };
 
+  useEffect(() => {
+    buttonEnable();
+  }, [email, password]);
+
   const handleChange = ({ target }) => {
     if (target.name === 'email') {
       setEmail(target.value);
@@ -33,7 +31,6 @@ function Login() {
     if (target.name === 'password') {
       setPassword(target.value);
     }
-    buttonEnable();
   };
 
   return (
