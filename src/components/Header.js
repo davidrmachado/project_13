@@ -1,5 +1,8 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import AppContext from '../context/AppContext';
+import searchIcon from '../images/searchIcon.svg';
+import profileIcon from '../images/profileIcon.svg';
 
 export default function Header() {
   const { title } = useContext(AppContext);
@@ -11,16 +14,21 @@ export default function Header() {
       { (title !== 'Done Recipes' && title !== 'Favorite Recipes' && title !== 'Profile')
        && (
          <img
-           src="src/images/searchIcon.svg"
+           src={ searchIcon }
            alt="Search Icon"
            data-testid="search-top-btn"
          />
        )}
-      <img
-        src="src/images/profileIcon.svg"
-        alt="Profile button"
-        data-testid="profile-top-btn"
-      />
+      <Link
+        to="/profile"
+        href="teste"
+      >
+        <img
+          src={ profileIcon }
+          alt="Profile button"
+          data-testid="profile-top-btn"
+        />
+      </Link>
     </div>
   );
 }
