@@ -12,8 +12,22 @@ export async function fetchNationalities() {
   return data;
 }
 
-export async function fetchIngredients() {
-  const url = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+export async function fetchIngredients(ingrediente) {
+  const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingrediente}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchNames(name) {
+  const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchFirstLetter(FirstLetter) {
+  const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${FirstLetter}`;
   const response = await fetch(url);
   const data = await response.json();
   return data;

@@ -6,9 +6,13 @@ import profileIcon from '../images/profileIcon.svg';
 import SearchBar from './SearchBar';
 
 export default function Header() {
-  const { title } = useContext(AppContext);
+  const { title, setSearchInput } = useContext(AppContext);
   const [showElement, setShowElement] = useState(false);
   const showOrHide = () => setShowElement(!showElement);
+
+  const handleChange = ({ target }) => {
+    setSearchInput(target.value);
+  };
 
   return (
     <div>
@@ -31,7 +35,11 @@ export default function Header() {
       { showElement
         ? (
           <div>
-            <input type="text" data-testid="search-input" />
+            <input
+              type="text"
+              data-testid="search-input"
+              onChange={ handleChange }
+            />
             <SearchBar />
           </div>
         )
