@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-// import AppContext from '../context/AppContext';
+import AppContext from '../context/AppContext';
 
 function Login() {
   const history = useHistory();
+  const { setTitle } = useContext(AppContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [buttonIsDisabled, setButtonIsDisabled] = useState(true);
@@ -31,17 +32,22 @@ function Login() {
     }
   };
 
-  const handleClick = async () => {
+  const handleClick = () => {
     const obj = { email };
     localStorage.setItem('user', JSON.stringify(obj));
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
-    history.push('/teste');
+    history.push('/foods');
   };
+
+  useEffect(() => {
+    document.title = 'Login';
+    setTitle(document.title); // ?
+  }, []);
 
   return (
     <main>
-      <h1>Login</h1>
+
       <label htmlFor="email">
         <input
           type="email"

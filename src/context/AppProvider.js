@@ -1,5 +1,4 @@
-import React from 'react';
-// import React, { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
@@ -7,15 +6,10 @@ function AppProvider({ children }) {
   // const [buttonIsDisabled, setButtonIsDisabled] = useState(true);
   // const [email, setEmail] = useState('');
   // const [password, setPassword] = useState('');
-
+  const [title, setTitle] = useState('');
   const context = {
-    // buttonIsDisabled,
-    // setButtonIsDisabled,
-    // email,
-    // setEmail,
-    // password,
-    // setPassword,
-    // buttonEnable,
+    title,
+    setTitle,
   };
 
   return (

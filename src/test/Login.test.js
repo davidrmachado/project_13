@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import App from '../App';
@@ -31,7 +31,7 @@ describe('testes da aplicação', () => {
     userEvent.type(passwordInput, '1234567');
     expect(buttonSubmit).not.toBeDisabled();
   });
-  test('testa se ao clicar no botão entrar a página é redirecionada', () => {
+  test('testa se ao clicar no botão entrar a página é redirecionada', async () => {
     render(<App />);
     const history = createMemoryHistory();
 
@@ -41,6 +41,8 @@ describe('testes da aplicação', () => {
     userEvent.type(emailInput, 'teste@teste.com');
     userEvent.type(passwordInput, '1234567');
     userEvent.click(buttonSubmit);
-    expect(history.location.pathname).toBe('/');
+    waitFor(() => {
+      expect(history.location.pathname).toBe('/foods');
+    });
   });
 });
