@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 // import AppContext from '../context/AppContext';
 
 function Login() {
+  const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [buttonIsDisabled, setButtonIsDisabled] = useState(true);
@@ -34,6 +36,7 @@ function Login() {
     localStorage.setItem('user', JSON.stringify(obj));
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
+    history.push('/teste');
   };
 
   return (
