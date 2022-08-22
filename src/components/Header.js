@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 import searchIcon from '../images/searchIcon.svg';
 import profileIcon from '../images/profileIcon.svg';
+import SearchBar from './SearchBar';
 
 export default function Header() {
   const { title } = useContext(AppContext);
@@ -27,7 +28,14 @@ export default function Header() {
            />
          </button>
        )}
-      { showElement ? <input type="text" data-testid="search-input" /> : null }
+      { showElement
+        ? (
+          <div>
+            <input type="text" data-testid="search-input" />
+            <SearchBar />
+          </div>
+        )
+        : null }
       <Link
         to="/profile"
         href="teste"
