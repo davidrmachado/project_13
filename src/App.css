@@ -69,9 +69,9 @@
 
 footer {
   background: #f86624;
-  position: fixed;
   bottom: 0px;
-  width: 100%;
+  position: fixed;
   height: 50px;
   text-align: center;
+  width: 100%;
 }
