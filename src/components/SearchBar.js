@@ -1,12 +1,17 @@
 import React, { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
 import { fetchIngredients, fetchNames, fetchFirstLetter } from '../services/foodAPI';
+import {
+  fetchDrinkIngredients,
+  fetchDrinkNames,
+  fetchDrinkFirstLetter,
+} from '../services/drinkAPI';
 
 export default function SearchBar() {
   const [searchId, setSearchId] = useState('');
-  const { searchInput } = useContext(AppContext);
+  const { searchInput, title } = useContext(AppContext);
 
-  const handleClick = async () => {
+  const handleFood = async () => {
     if (searchId === 'ingredient') {
       const isFetch = await fetchIngredients(searchInput);
       return isFetch;
@@ -18,6 +23,22 @@ export default function SearchBar() {
         global.alert('Your search must have only 1 (one) character');
       }
       const isFetch = await fetchFirstLetter(searchInput);
+      return isFetch;
+    }
+  };
+
+  const handleDrink = async () => {
+    if (searchId === 'ingredient') {
+      const isFetch = await fetchDrinkIngredients(searchInput);
+      return isFetch;
+    } if (searchId === 'name') {
+      const isFetch = await fetchDrinkNames(searchInput);
+      return isFetch;
+    } if (searchId === 'first-letter') {
+      if (searchInput.length > 1) {
+        global.alert('Your search must have only 1 (one) character');
+      }
+      const isFetch = await fetchDrinkFirstLetter(searchInput);
       return isFetch;
     }
   };
@@ -61,7 +82,7 @@ export default function SearchBar() {
       <button
         type="button"
         data-testid="exec-search-btn"
-        onClick={ handleClick }
+        onClick={ title === 'Foods' ? handleFood : handleDrink }
       >
         Buscar
       </button>
