@@ -10,7 +10,7 @@ function Drinks() {
 
   useEffect(() => {
     document.title = 'Drinks';
-    setTitle(document.title); // ?
+    setTitle(document.title);
   }, []);
   return (
     <>
