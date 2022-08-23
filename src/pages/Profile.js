@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import AppContext from '../context/AppContext';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function Profile() {
   const {
@@ -12,7 +13,10 @@ function Profile() {
     setTitle(document.title); // ?
   }, []);
   return (
-    <Header />
+    <>
+      <Header />
+      <Footer />
+    </>
   );
 }
 
