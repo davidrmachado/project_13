@@ -1,29 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { fetchMeals } from '../services/foodAPI';
-import fetchDrinks from '../services/drinkAPI';
+import { fetchMeals, fetchMealsCategories, searchFoods } from '../services/foodAPI';
+import { fetchDrinks, fetchDrinksCategories } from '../services/drinkAPI';
 import Card from './Card';
 
 function Recipes({ type }) {
-  const MAXIMUM_CARDS = 12;
+  const MAX_RECIPES = 11;
+  const MAX_CATEGORIES = 4;
+
+  const [categories, setCategories] = useState([]);
   const [firstRecipes, setFirstRecipes] = useState([]);
 
   async function fetchMealsAPI() {
     const meals = await fetchMeals();
-    setFirstRecipes(meals.splice(0, MAXIMUM_CARDS));
+    setFirstRecipes(meals.filter((meal, index) => index <= MAX_RECIPES));
+    const mealsCategories = await fetchMealsCategories();
+    setCategories(mealsCategories.filter((meal, index) => index <= MAX_CATEGORIES));
   }
 
   async function fetchDrinksAPI() {
     const drinks = await fetchDrinks();
-    setFirstRecipes(drinks.splice(0, MAXIMUM_CARDS));
+    setFirstRecipes(drinks.filter((meal, index) => index <= MAX_RECIPES));
+    const drinksCategories = await fetchDrinksCategories();
+    setCategories(drinksCategories.filter((meal, index) => index <= MAX_CATEGORIES));
   }
 
-  useEffect(() => {
+  function resetFilters() {
     if (type === 'foods') {
       fetchMealsAPI();
     } else {
       fetchDrinksAPI();
     }
+  }
+
+  useEffect(() => {
+    resetFilters();
   }, []);
 
   function mealsMap(meal, index) {
@@ -48,10 +59,40 @@ function Recipes({ type }) {
     );
   }
 
+  async function filter(value) {
+    const filteredFoods = await searchFoods(type, value);
+    if (type === 'foods') {
+      const { meals } = filteredFoods;
+      setFirstRecipes(meals.filter((meal, index) => index <= MAX_RECIPES));
+    } else {
+      const { drinks } = filteredFoods;
+      setFirstRecipes(drinks.filter((meal, index) => index <= MAX_RECIPES));
+    }
+  }
+
   return (
     <div>
+      <section>
+        <button
+          type="button"
+          data-testid="All-category-filter"
+          onClick={ resetFilters }
+        >
+          All
+        </button>
+        {categories.map((category) => (
+          <button
+            key={ category.strCategory }
+            type="button"
+            data-testid={ `${category.strCategory}-category-filter` }
+            onClick={ () => { filter(category.strCategory); } }
+          >
+            {category.strCategory}
+          </button>))}
+      </section>
       {
-        type === 'foods' ? firstRecipes.map((meal, index) => mealsMap(meal, index))
+        type === 'foods'
+          ? firstRecipes.map((meal, index) => mealsMap(meal, index))
           : firstRecipes.map((drink, index) => drinksMap(drink, index))
       }
     </div>

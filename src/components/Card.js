@@ -9,8 +9,9 @@ function Card({ name, thumb, index }) {
       </legend>
       <img
         src={ thumb }
-        alt={ `foto e receita de ${name} ` }
+        alt={ `${name} recipe.` }
         data-testid={ `${index}-card-img` }
+        style={ { width: '200px', height: '200px' } }
       />
     </div>
   );
