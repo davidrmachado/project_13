@@ -1,26 +1,27 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-// import { createMemoryHistory } from 'history';
-// import { render, screen, waitFor } from '@testing-library/react';
-import { screen } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
+import { render, screen, waitFor } from '@testing-library/react';
 import App from '../App';
 import mockIngredientSearch from '../services/helpers/mockIngredientSearch';
-import renderWithRouter from '../services/helpers/renderWithRouter';
+// import renderWithRouter from '../services/helpers/renderWithRouter';
 
 const EMAIL_INPUT = 'email-input';
 const PASSWORD_INPUT = 'password-input';
 const LOGIN_BUTTON = 'login-submit-btn';
 
-jest.spyOn(global, 'fetch');
-jest.spyOn(window, 'alert').mockImplementation(() => {});
+// jest.spyOn(global, 'fetch');
+// jest.spyOn(window, 'alert').mockImplementation(() => {});
 
 describe('testes do header', () => {
-  test('verifica se todos os elementos são renderizados', () => {
-    renderWithRouter(<App />);
+  test('verifica se todos os elementos são renderizados', async () => {
+    render(<App />);
 
-    global.fetch.mockResolvedValue({
-      json: jest.fn().mockResolvedValue(mockIngredientSearch),
-    });
+    // global.fetch.mockResolvedValue({
+    //   json: jest.fn().mockResolvedValue(mockIngredientSearch),
+    // });
+
+    const history = createMemoryHistory();
 
     const emailInput = screen.getByTestId(EMAIL_INPUT);
     const passwordInput = screen.getByTestId(PASSWORD_INPUT);
@@ -35,30 +36,40 @@ describe('testes do header', () => {
     const nameRadio = screen.getByTestId('name-search-radio');
     const firstLetterRadio = screen.getByTestId('first-letter-search-radio');
     const searchExecButton = screen.getByTestId('exec-search-btn');
-    const searchInput = screen.getByTestId('search-input');
+    // const searchInput = screen.getByTestId('search-input');
 
     expect(ingredientRadio).toBeInTheDocument();
     expect(nameRadio).toBeInTheDocument();
     expect(firstLetterRadio).toBeInTheDocument();
     expect(searchExecButton).toBeInTheDocument();
 
-    userEvent.type(searchInput, 'c');
-    userEvent.click(ingredientRadio);
-    userEvent.click(searchExecButton);
-    expect(fetch).toBeCalled();
+    // userEvent.type(searchInput, 'c');
+    // userEvent.click(ingredientRadio);
+    // userEvent.click(searchExecButton);
+    // expect(fetch).toBeCalled();
 
-    userEvent.click(nameRadio);
-    userEvent.click(searchExecButton);
-    expect(fetch).toBeCalled();
+    // userEvent.click(nameRadio);
+    // userEvent.click(searchExecButton);
+    // expect(fetch).toBeCalled();
 
-    userEvent.click(firstLetterRadio);
-    userEvent.click(searchExecButton);
-    expect(fetch).toBeCalled();
+    // userEvent.click(firstLetterRadio);
+    // userEvent.click(searchExecButton);
+    // expect(fetch).toBeCalled();
 
-    userEvent.type(searchInput, 'chi');
-    userEvent.click(firstLetterRadio);
-    userEvent.click(searchExecButton);
-    expect(window.alert).toBeCalled();
+    // userEvent.type(searchInput, 'chi');
+    // userEvent.click(firstLetterRadio);
+    // userEvent.click(searchExecButton);
+    // expect(window.alert).toBeCalled();
+
+    const drinksButton = screen.getByTestId('drinks-bottom-btn');
+    expect(drinksButton).toBeInTheDocument();
+    userEvent.click(drinksButton);
+
+    // const { pathname } = history.location;
+    waitFor(() => {
+      console.log(history);
+    });
+    // expect(pathname).toBe('/drinks');
   });
 
   // test('verifica chamada a API - Name Radio', () => {

@@ -1,6 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import AppContext from '../context/AppContext';
-import { fetchIngredients, fetchNames, fetchFirstLetter } from '../services/foodAPI';
+import {
+  fetchIngredients,
+  fetchNames,
+  fetchFirstLetter,
+} from '../services/foodAPI';
+
 import {
   fetchDrinkIngredients,
   fetchDrinkNames,
@@ -8,38 +15,57 @@ import {
 } from '../services/drinkAPI';
 
 export default function SearchBar() {
+  const history = useHistory();
   const [searchId, setSearchId] = useState('');
   const { searchInput, title } = useContext(AppContext);
+  const [searchResult, setSearchResult] = useState([]);
+
+  useEffect(() => {
+    switch (title) {
+    case 'Foods':
+      if (searchResult.length === 1) {
+        history.push(`/foods/${searchResult[0].idMeal}`);
+      }
+      break;
+    case 'Drinks':
+      if (searchResult.length === 1) {
+        history.push(`/drinks/${searchResult[0].idDrink}`);
+      }
+      break;
+    default: console.log('default');
+    }
+  }, [searchResult]);
 
   const handleFood = async () => {
     if (searchId === 'ingredient') {
       const isFetch = await fetchIngredients(searchInput);
-      return isFetch;
+      return setSearchResult(isFetch.meals);
     } if (searchId === 'name') {
       const isFetch = await fetchNames(searchInput);
-      return isFetch;
+      return setSearchResult(isFetch.meals);
     } if (searchId === 'first-letter') {
       if (searchInput.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       }
       const isFetch = await fetchFirstLetter(searchInput);
-      return isFetch;
+      return setSearchResult(isFetch.meals);
     }
   };
 
   const handleDrink = async () => {
     if (searchId === 'ingredient') {
       const isFetch = await fetchDrinkIngredients(searchInput);
-      return isFetch;
+      return setSearchResult(isFetch.drinks);
     } if (searchId === 'name') {
       const isFetch = await fetchDrinkNames(searchInput);
-      return isFetch;
+      console.log(isFetch);
+      return setSearchResult(isFetch.drinks);
     } if (searchId === 'first-letter') {
       if (searchInput.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       }
       const isFetch = await fetchDrinkFirstLetter(searchInput);
-      return isFetch;
+      return setSearchResult(isFetch.drinks);
     }
   };
 
