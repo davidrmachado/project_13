@@ -5,4 +5,4 @@ async function fetchDrinks() {
   return data;
 }
 
-export default fetchDrinks;
+export default fetchDrinks.drinks;
