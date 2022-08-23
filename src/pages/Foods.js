@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import Header from '../components/Header';
 import AppContext from '../context/AppContext';
 import Recipes from '../components/Recipes';
+import Footer from '../components/Footer';
 
 function Foods() {
   const {
@@ -13,11 +14,11 @@ function Foods() {
   }, []);
 
   return (
-    <div>
+    <>
       <Header />
       <Recipes type="foods" />
-    </div>
-
+      <Footer />
+    </>
   );
 }
 
