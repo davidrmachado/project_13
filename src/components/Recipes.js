@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { fetchMeals, fetchMealsCategories, searchFoods } from '../services/foodAPI';
+import { fetchMeals, foodsCategoriesAPI, searchFoods } from '../services/foodAPI';
 import { fetchDrinks, fetchDrinksCategories } from '../services/drinkAPI';
 import Card from './Card';
 
@@ -8,28 +8,40 @@ function Recipes({ type }) {
   const MAX_RECIPES = 11;
   const MAX_CATEGORIES = 4;
 
-  const [categories, setCategories] = useState([]);
-  const [firstRecipes, setFirstRecipes] = useState([]);
+  const teste = document.title;
+
+  const [firstMealRecipes, setFirtsMealRecipes] = useState([]);
+  const [firstDrinkRecipes, setFirstDrinkRecipes] = useState([]);
+  const [mealsCategories, setMealsCategories] = useState([]);
+  const [drinksCategories, setDrinksCategories] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState('');
+  const [globalRecipes] = useState({});
+  let categories = [];
 
   async function fetchMealsAPI() {
-    const meals = await fetchMeals();
-    setFirstRecipes(meals.filter((meal, index) => index <= MAX_RECIPES));
-    const mealsCategories = await fetchMealsCategories();
-    setCategories(mealsCategories.filter((meal, index) => index <= MAX_CATEGORIES));
+    const receitas = await fetchMeals();
+    setFirtsMealRecipes(receitas.filter((meal, index) => index <= MAX_RECIPES));
+    const { meals } = await foodsCategoriesAPI();
+    setMealsCategories(meals
+      .filter((meal, index) => index <= MAX_CATEGORIES));
   }
 
   async function fetchDrinksAPI() {
     const drinks = await fetchDrinks();
-    setFirstRecipes(drinks.filter((meal, index) => index <= MAX_RECIPES));
-    const drinksCategories = await fetchDrinksCategories();
-    setCategories(drinksCategories.filter((meal, index) => index <= MAX_CATEGORIES));
+    setFirstDrinkRecipes(drinks.filter((meal, index) => index <= MAX_RECIPES));
+    const drinksCategories1 = await fetchDrinksCategories();
+    setDrinksCategories(drinksCategories1
+      .filter((meal, index) => index <= MAX_CATEGORIES));
   }
 
   function resetFilters() {
-    if (type === 'foods') {
+    if (Object.keys(globalRecipes).length === 0) {
+      fetchDrinksAPI();
+
       fetchMealsAPI();
     } else {
-      fetchDrinksAPI();
+      const { myRecipes } = globalRecipes;
+      setFirstRecipes(myRecipes.filter((meal, index) => index <= MAX_CATEGORIES));
     }
   }
 
@@ -40,10 +52,12 @@ function Recipes({ type }) {
   function mealsMap(meal, index) {
     return (
       <Card
-        key={ meal.idMeal }
+        key={ index }
         name={ meal.strMeal }
         thumb={ meal.strMealThumb }
         index={ index }
+        id={ meal.idMeal }
+        type="foods"
       />
     );
   }
@@ -51,24 +65,45 @@ function Recipes({ type }) {
   function drinksMap(drink, index) {
     return (
       <Card
-        key={ drink.idDrink }
+        key={ index }
         name={ drink.strDrink }
         thumb={ drink.strDrinkThumb }
         index={ index }
+        id={ drink.idDrink }
+        type="drinks"
       />
     );
   }
 
-  async function filter(value) {
+  async function setFilter(value) {
     const filteredFoods = await searchFoods(type, value);
     if (type === 'foods') {
       const { meals } = filteredFoods;
-      setFirstRecipes(meals.filter((meal, index) => index <= MAX_RECIPES));
+      setFirtsMealRecipes(meals.filter((meal, index) => index <= MAX_RECIPES));
     } else {
       const { drinks } = filteredFoods;
-      setFirstRecipes(drinks.filter((meal, index) => index <= MAX_RECIPES));
+      setFirstDrinkRecipes(drinks.filter((meal, index) => index <= MAX_RECIPES));
     }
   }
+
+  function filter(value) {
+    if (selectedFilter === value) {
+      setSelectedFilter('');
+      resetFilters();
+    } else {
+      setSelectedFilter(value);
+      setFilter(value);
+    }
+  }
+
+  function validation() {
+    if (teste === 'Drinks') {
+      categories = drinksCategories;
+    } else {
+      categories = mealsCategories;
+    }
+  }
+  validation();
 
   return (
     <div>
@@ -80,9 +115,9 @@ function Recipes({ type }) {
         >
           All
         </button>
-        {categories.map((category) => (
+        { categories.map((category, index) => (
           <button
-            key={ category.strCategory }
+            key={ index }
             type="button"
             data-testid={ `${category.strCategory}-category-filter` }
             onClick={ () => { filter(category.strCategory); } }
@@ -92,8 +127,8 @@ function Recipes({ type }) {
       </section>
       {
         type === 'foods'
-          ? firstRecipes.map((meal, index) => mealsMap(meal, index))
-          : firstRecipes.map((drink, index) => drinksMap(drink, index))
+          ? firstMealRecipes.map((meal, index) => mealsMap(meal, index))
+          : firstDrinkRecipes.map((drink, index) => drinksMap(drink, index))
       }
     </div>
   );
