@@ -7,9 +7,6 @@ function AppProvider({ children }) {
   // const [email, setEmail] = useState('');
   // const [password, setPassword] = useState('');
   const [title, setTitle] = useState('');
-  const [searchInput, setSearchInput] = useState('');
-  const [renderCards, setRenderCards] = useState([]);
-
   const context = {
     title,
     setTitle,
@@ -17,6 +14,12 @@ function AppProvider({ children }) {
     setSearchInput,
     renderCards,
     setRenderCards,
+    globalRecipes,
+    setGlobalRecipes,
+    id,
+    setId,
+    detail,
+    setDetail,
   };
 
   return (
