@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { foodDetailAPI } from '../services/foodAPI';
 import AppContext from '../context/AppContext';
 
-function RecipeDetails({ type, id }) {
+function RecipeDetails({ id }) {
   const {
     detail,
     setDetail,
