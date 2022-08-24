@@ -8,12 +8,15 @@ function AppProvider({ children }) {
   // const [password, setPassword] = useState('');
   const [title, setTitle] = useState('');
   const [searchInput, setSearchInput] = useState('');
+  const [renderCards, setRenderCards] = useState([]);
 
   const context = {
     title,
     setTitle,
     searchInput,
     setSearchInput,
+    renderCards,
+    setRenderCards,
   };
 
   return (
