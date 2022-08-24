@@ -26,18 +26,34 @@ export async function fetchImages(ingrediente) {
   return data;
 }
 
-export async function fetchMeals() {
+export async function fetchMeals() { // retorna lista de meals
   const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const response = await fetch(url);
   const data = await response.json();
   return data.meals;
 }
 
-export async function fetchMealsCategories() { // api para retornar a lista do req 20
-  const endpoint = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+export async function fetchFoodsList(endPointType) {
+  let endpoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+
+  if (endPointType === 'drinks') {
+    endpoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  }
+
   const request = await fetch(endpoint);
   const response = await request.json();
-  return response.meals;
+  return response[endPointType];
+}
+
+export async function foodsCategoriesAPI(endPointType) {
+  let endpoint = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+
+  if (endPointType === 'drinks') {
+    endpoint = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+  }
+  const request = await fetch(endpoint);
+  const response = await request.json();
+  return response;
 }
 
 export async function searchFoods(endPointType, query) {

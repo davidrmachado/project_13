@@ -7,9 +7,13 @@ function AppProvider({ children }) {
   // const [email, setEmail] = useState('');
   // const [password, setPassword] = useState('');
   const [title, setTitle] = useState('');
+  const [globalRecipes, setGlobalRecipes] = useState({});
+
   const context = {
     title,
     setTitle,
+    globalRecipes,
+    setGlobalRecipes,
   };
 
   return (
