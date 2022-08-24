@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import AppContext from '../context/AppContext';
 
 function Card({ name, thumb, index, type, id }) {
+  const { setId } = useContext(AppContext);
   const history = useHistory();
+
   function redirectToDetails() {
     if (type === 'foods') {
       history.push(`/foods/${id}`);
     } else {
       history.push(`/drinks/${id}`);
     }
+    setId(id);
   }
   return (
     <div data-testid={ `${index}-recipe-card` }>
