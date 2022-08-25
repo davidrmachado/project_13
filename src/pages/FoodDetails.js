@@ -6,19 +6,19 @@ import Footer from '../components/Footer';
 function FoodDetails() {
   const {
     setTitle,
-    id,
+    // id,
   } = useContext(AppContext);
 
   useEffect(() => {
     document.title = 'Food Details';
-    setTitle(document.title); // ?
+    setTitle(document.title);
   }, []);
 
   return (
     <div>
+      <h1>{ document.title }</h1>
       <RecipeDetails type="foods" id={ id } />
       <Footer />
-
     </div>
   );
 }

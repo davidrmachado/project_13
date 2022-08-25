@@ -3,18 +3,22 @@ import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
 function AppProvider({ children }) {
-  // const [buttonIsDisabled, setButtonIsDisabled] = useState(true);
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
   const [title, setTitle] = useState('');
-  const [globalRecipes, setGlobalRecipes] = useState({});
+  const [searchInput, setSearchInput] = useState('');
+  const [renderCards, setRenderCards] = useState([]);
   const [id, setId] = useState('');
   const [detail, setDetail] = useState([]);
   const [doneRecipe, setDoneRecipe] = useState(false);
   const [startedRecipe, setStartedRecipe] = useState(false);
+  const [globalRecipes, setGlobalRecipes] = useState({});
+
   const context = {
     title,
     setTitle,
+    searchInput,
+    setSearchInput,
+    renderCards,
+    setRenderCards,
     globalRecipes,
     setGlobalRecipes,
     id,

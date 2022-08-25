@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 function DrinkDetails() {
   const {
     setTitle,
-    id,
+    // id,
   } = useContext(AppContext);
 
   useEffect(() => {
@@ -16,6 +16,7 @@ function DrinkDetails() {
 
   return (
     <div>
+      <h1>{ document.title }</h1>
       <RecipeDetails type="drinks" id={ id } />
       <Footer />
     </div>

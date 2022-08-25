@@ -23,6 +23,12 @@ describe('testes do header', () => {
     const searchButton = screen.getByTestId('search-top-btn');
     const profileButton = screen.getByTestId('profile-top-btn');
 
+    userEvent.click(searchButton);
+
+    const searchInput = screen.getByTestId('search-input');
+
+    expect(searchInput).toBeInTheDocument();
+
     expect(title).toBeInTheDocument();
     expect(searchButton).toBeInTheDocument();
     expect(profileButton).toBeInTheDocument();

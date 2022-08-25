@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import AppContext from '../context/AppContext';
 import Recipes from '../components/Recipes';
 import Footer from '../components/Footer';
+import FoodCards from '../components/FoodCards';
 
 function Foods() {
   const {
@@ -16,6 +17,7 @@ function Foods() {
   return (
     <>
       <Header />
+      <FoodCards />
       <Recipes type="foods" />
       <Footer />
     </>

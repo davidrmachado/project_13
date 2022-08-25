@@ -3,6 +3,7 @@ import AppContext from '../context/AppContext';
 import Header from '../components/Header';
 import Recipes from '../components/Recipes';
 import Footer from '../components/Footer';
+import DrinkCards from '../components/DrinkCards';
 
 function Drinks() {
   const {
@@ -16,6 +17,7 @@ function Drinks() {
   return (
     <>
       <Header />
+      <DrinkCards />
       <Recipes type="drinks" />
       <Footer />
     </>

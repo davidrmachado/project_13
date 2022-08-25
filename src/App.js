@@ -1,9 +1,7 @@
 import React from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Route,
-} from 'react-router-dom';
+
 import Login from './pages/Login';
 import Foods from './pages/Foods';
 import Profile from './pages/Profile';
@@ -20,7 +18,7 @@ function App() {
   return (
     <div>
       <AppProvider>
-        <Router>
+        <BrowserRouter>
           <Route exact path="/" component={ Login } />
           <Route exact path="/foods" component={ Foods } />
           <Route exact path="/profile" component={ Profile } />
@@ -31,7 +29,7 @@ function App() {
           <Route exact path="/foods/:id/in-progress" component={ FoodInProgress } />
           <Route exact path="/drinks/:id/in-progress" component={ DrinkInProgress } />
           <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
-        </Router>
+        </BrowserRouter>
       </AppProvider>
     </div>
   );
