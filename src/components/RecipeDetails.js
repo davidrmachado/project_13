@@ -6,8 +6,10 @@ import AppContext from '../context/AppContext';
 import { drinkDetailAPI } from '../services/drinkAPI';
 import DetailCards from './DetailCard';
 
-function RecipeDetails({ id }) {
+function RecipeDetails({ id, type }) {
   const {
+    setTipo,
+    setidProgress,
     detail,
     setDetail,
     doneRecipe,
@@ -17,16 +19,20 @@ function RecipeDetails({ id }) {
   async function getFoodDetails() {
     const { meals } = await foodDetailAPI(id);
     setDetail(meals);
+    setidProgress(id);
   }
   async function getDrinkDetails() {
     const { drinks } = await drinkDetailAPI(id);
+    setidProgress(id);
     setDetail(drinks);
   }
 
   useEffect(() => {
     if (type === 'foods') {
+      setTipo('foods');
       getFoodDetails();
     } else if (type === 'drinks') {
+      setTipo('drinks');
       getDrinkDetails();
     }
   }, []);
@@ -73,6 +79,26 @@ function RecipeDetails({ id }) {
   if (type === 'foods') {
     return (
       <div>
+        {!doneRecipe
+            && (
+              startedRecipe
+                ? (
+                  <Link
+                    data-testid="start-recipe-btn"
+                    to={ `/${type}/${id}/in-progress` }
+                  >
+                    Continue Recipe
+                  </Link>
+                )
+                : (
+                  <Link
+                    data-testid="start-recipe-btn"
+                    to={ `/${type}/${id}/in-progress` }
+                  >
+                    Start Recipe
+                  </Link>
+                )
+            )}
         {detail.map((item, index) => (
           <div key={ index }>
             <h1 data-testid="recipe-title">{item.strMeal}</h1>
@@ -164,7 +190,7 @@ function RecipeDetails({ id }) {
 }
 
 RecipeDetails.propTypes = {
-  // type: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };
 

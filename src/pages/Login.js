@@ -42,7 +42,7 @@ function Login() {
 
   useEffect(() => {
     document.title = 'Login';
-    setTitle(document.title); // ?
+    setTitle(document.title);
   }, []);
 
   return (

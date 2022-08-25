@@ -11,7 +11,7 @@ function Foods() {
   } = useContext(AppContext);
   useEffect(() => {
     document.title = 'Foods';
-    setTitle(document.title); // ?
+    setTitle(document.title);
   }, []);
 
   return (
