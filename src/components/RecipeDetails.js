@@ -1,17 +1,17 @@
 import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { foodDetailAPI } from '../services/foodAPI';
 import AppContext from '../context/AppContext';
 import { drinkDetailAPI } from '../services/drinkAPI';
 import DetailCards from './DetailCard';
 
-function RecipeDetails({ id }) {
+function RecipeDetails({ type, id }) {
   const {
     detail,
     setDetail,
-    doneRecipe,
-    startedRecipe,
+    // doneRecipe,
+    // startedRecipe,
   } = useContext(AppContext);
 
   async function getFoodDetails() {
@@ -135,7 +135,7 @@ function RecipeDetails({ id }) {
               {handleIngMeaDrink(Object.entries(item))}
             </ul>
             <DetailCards typeOf={ type } />
-            {!doneRecipe
+            {/* {!doneRecipe
             && (
               startedRecipe
                 ? (
@@ -154,7 +154,7 @@ function RecipeDetails({ id }) {
                     Start Recipe
                   </Link>
                 )
-            )}
+            )} */}
           </div>
 
         ))}
@@ -164,7 +164,7 @@ function RecipeDetails({ id }) {
 }
 
 RecipeDetails.propTypes = {
-  // type: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };
 
