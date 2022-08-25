@@ -20,6 +20,7 @@ export default function Footer() {
       <Link
         to="/drinks"
       >
+
         <img
           src={ drinkIcon }
           alt="Drinks"
