@@ -10,7 +10,8 @@ function AppProvider({ children }) {
   const [globalRecipes, setGlobalRecipes] = useState({});
   const [id, setId] = useState('');
   const [detail, setDetail] = useState([]);
-
+  const [doneRecipe, setDoneRecipe] = useState(false);
+  const [startedRecipe, setStartedRecipe] = useState(false);
   const context = {
     title,
     setTitle,
@@ -20,6 +21,10 @@ function AppProvider({ children }) {
     setId,
     detail,
     setDetail,
+    doneRecipe,
+    setDoneRecipe,
+    startedRecipe,
+    setStartedRecipe,
   };
 
   return (

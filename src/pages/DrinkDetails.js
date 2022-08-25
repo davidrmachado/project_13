@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import AppContext from '../context/AppContext';
 import RecipeDetails from '../components/RecipeDetails';
+import Footer from '../components/Footer';
 
 function DrinkDetails() {
   const {
@@ -12,8 +13,12 @@ function DrinkDetails() {
     document.title = 'Drink Details';
     setTitle(document.title); // ?
   }, []);
+
   return (
-    <RecipeDetails type="drinks" id={ id } />
+    <div>
+      <RecipeDetails type="drinks" id={ id } />
+      <Footer />
+    </div>
   );
 }
 
