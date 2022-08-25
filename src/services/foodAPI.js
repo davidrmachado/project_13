@@ -35,7 +35,7 @@ export async function fetchFoodsList(endPointType) {
 
   const request = await fetch(endpoint);
   const response = await request.json();
-  return response[endPointType];
+  return response;
 }
 
 export async function foodsCategoriesAPI(endPointType) {
@@ -65,7 +65,7 @@ export async function foodDetailAPI(id) { // api para retornar os detalhes da co
   const request = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
   const data = await request.json();
   console.log(data);
-  return data.meals[0];
+  return data;
 }
 
 // ------ requisito 11 ------
