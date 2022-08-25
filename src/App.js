@@ -10,7 +10,7 @@ import Drinks from './pages/Drinks';
 import FoodDetails from './pages/FoodDetails';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import DrinkDetails from './pages/DrinkDetails';
-import FoodInProgress from './pages/FoodInProgress';
+import RecipeInProgress from './pages/RecipeInProgress';
 import DrinkInProgress from './pages/DrinkInProgress';
 import AppProvider from './context/AppProvider';
 
@@ -26,7 +26,7 @@ function App() {
           <Route exact path="/drinks" component={ Drinks } />
           <Route exact path="/foods/:id" component={ FoodDetails } />
           <Route exact path="/drinks/:id" component={ DrinkDetails } />
-          <Route exact path="/foods/:id/in-progress" component={ FoodInProgress } />
+          <Route exact path="/foods/:id/in-progress" component={ RecipeInProgress } />
           <Route exact path="/drinks/:id/in-progress" component={ DrinkInProgress } />
           <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
         </BrowserRouter>
