@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import AppContext from '../context/AppContext';
-import RecipeDetails from '../components/RecipeDetails';
+// import RecipeDetails from '../components/RecipeDetails';
 
 function FoodDetails() {
   const {
     setTitle,
-    id,
+    // id,
   } = useContext(AppContext);
 
   useEffect(() => {
@@ -14,7 +14,8 @@ function FoodDetails() {
   }, []);
   return (
     <div>
-      <RecipeDetails type="foods" id={ id } />
+      <h1>{ document.title }</h1>
+      {/* <RecipeDetails type="foods" id={ id } /> */}
 
     </div>
   );

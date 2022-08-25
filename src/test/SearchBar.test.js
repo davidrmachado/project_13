@@ -72,7 +72,6 @@ describe('testes do componente SearchBar', () => {
     userEvent.type(searchInput, 'c');
     userEvent.click(nameRadio);
     userEvent.click(searchExecButton);
-    // const THREE = 3;
     await waitFor(() => expect(global.fetch).toBeCalled());
 
     userEvent.clear(searchInput);

@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import AppContext from '../context/AppContext';
-import RecipeDetails from '../components/RecipeDetails';
+// import RecipeDetails from '../components/RecipeDetails';
 
 function DrinkDetails() {
   const {
     setTitle,
-    id,
+    // id,
   } = useContext(AppContext);
 
   useEffect(() => {
@@ -13,7 +13,8 @@ function DrinkDetails() {
     setTitle(document.title); // ?
   }, []);
   return (
-    <RecipeDetails type="drinks" id={ id } />
+    <h1>{ document.title }</h1>
+  // <RecipeDetails type="drinks" id={ id } />
   );
 }
 
