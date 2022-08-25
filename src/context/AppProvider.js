@@ -6,7 +6,14 @@ function AppProvider({ children }) {
   // const [buttonIsDisabled, setButtonIsDisabled] = useState(true);
   // const [email, setEmail] = useState('');
   // const [password, setPassword] = useState('');
+
   const [title, setTitle] = useState('');
+  const [searchInput, setSearchInput] = useState('');
+  const [renderCards, setRenderCards] = useState([]);
+  const [globalRecipes, setGlobalRecipes] = useState({});
+  const [id, setId] = useState('');
+  const [detail, setDetail] = useState([]);
+
   const context = {
     title,
     setTitle,

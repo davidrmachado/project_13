@@ -20,30 +20,6 @@ export default function SearchBar() {
   const { searchInput, title, setRenderCards } = useContext(AppContext);
   const [searchResult, setSearchResult] = useState([]);
 
-  // useEffect(() => {
-  //   switch (title) {
-  //   case 'Foods':
-  //     if (searchResult === null) {
-  //       global.alert('Sorry, we haven\'t found any recipes for these filters.');
-  //     } else if (searchResult.length === 1) {
-  //       history.push(`/foods/${searchResult[0].idMeal}`);
-  //     } else {
-  //       setRenderCards(searchResult);
-  //     }
-  //     break;
-  //   case 'Drinks':
-  //     if (searchResult === null) {
-  //       global.alert('Sorry, we haven\'t found any recipes for these filters.');
-  //     } else if (searchResult.length === 1) {
-  //       history.push(`/drinks/${searchResult[0].idDrink}`);
-  //     } else {
-  //       setRenderCards(searchResult);
-  //     }
-  //     break;
-  //   default: history.push('/profile');
-  //   }
-  // }, [searchResult]);
-
   useEffect(() => {
     if (title === 'Foods') {
       if (searchResult === null) {

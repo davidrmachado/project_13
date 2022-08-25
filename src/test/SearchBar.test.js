@@ -13,6 +13,13 @@ import AppProvider from '../context/AppProvider';
 import Foods from '../pages/Foods';
 import Drinks from '../pages/Drinks';
 
+const SEARCH_TOP_BTN = 'search-top-btn';
+const NAME_SEARCH_RADIO = 'name-search-radio';
+const EXEC_SEARCH_BTN = 'exec-search-btn';
+const INGREDIENT_SEARCH_RADIO = 'ingredient-search-radio';
+const FIRST_LETTER_SEARCH_RADIO = 'first-letter-search-radio';
+const SEARCH_INPUT = 'search-input';
+
 afterEach(() => jest.clearAllMocks());
 
 describe('testes do componente SearchBar', () => {
@@ -42,14 +49,14 @@ describe('testes do componente SearchBar', () => {
     history.push('/foods');
     expect(history.location.pathname).toBe('/foods');
 
-    const searchButton = screen.getByTestId('search-top-btn');
+    const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
     userEvent.click(searchButton);
 
-    const ingredientRadio = screen.getByTestId('ingredient-search-radio');
-    const nameRadio = screen.getByTestId('name-search-radio');
-    const firstLetterRadio = screen.getByTestId('first-letter-search-radio');
-    const searchExecButton = screen.getByTestId('exec-search-btn');
-    const searchInput = screen.getByTestId('search-input');
+    const ingredientRadio = screen.getByTestId(INGREDIENT_SEARCH_RADIO);
+    const nameRadio = screen.getByTestId(NAME_SEARCH_RADIO);
+    const firstLetterRadio = screen.getByTestId(FIRST_LETTER_SEARCH_RADIO);
+    const searchExecButton = screen.getByTestId(EXEC_SEARCH_BTN);
+    const searchInput = screen.getByTestId(SEARCH_INPUT);
 
     expect(ingredientRadio).toBeInTheDocument();
     expect(nameRadio).toBeInTheDocument();
@@ -105,39 +112,39 @@ describe('testes do componente SearchBar', () => {
     expect(pageTitle).toBeInTheDocument();
     expect(pageTitle.innerHTML).toBe('Drinks');
 
-    const searchButton = screen.getByTestId('search-top-btn');
+    const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
     userEvent.click(searchButton);
 
     const { pathname } = history.location;
     expect(pathname).toBe('/drinks');
 
-    const ingredientRadio2 = screen.getByTestId('ingredient-search-radio');
-    const nameRadio2 = screen.getByTestId('name-search-radio');
-    const firstLetterRadio2 = screen.getByTestId('first-letter-search-radio');
-    const searchExecButton2 = screen.getByTestId('exec-search-btn');
-    const searchInput2 = screen.getByTestId('search-input');
+    const ingredientRadio = screen.getByTestId(INGREDIENT_SEARCH_RADIO);
+    const nameRadio = screen.getByTestId(NAME_SEARCH_RADIO);
+    const firstLetterRadio = screen.getByTestId(FIRST_LETTER_SEARCH_RADIO);
+    const searchExecButton = screen.getByTestId(EXEC_SEARCH_BTN);
+    const searchInput = screen.getByTestId(SEARCH_INPUT);
 
-    expect(ingredientRadio2).toBeInTheDocument();
-    expect(nameRadio2).toBeInTheDocument();
-    expect(firstLetterRadio2).toBeInTheDocument();
-    expect(searchExecButton2).toBeInTheDocument();
+    expect(ingredientRadio).toBeInTheDocument();
+    expect(nameRadio).toBeInTheDocument();
+    expect(firstLetterRadio).toBeInTheDocument();
+    expect(searchExecButton).toBeInTheDocument();
 
-    userEvent.type(searchInput2, 'a');
-    userEvent.click(ingredientRadio2);
-    userEvent.click(searchExecButton2);
+    userEvent.type(searchInput, 'a');
+    userEvent.click(ingredientRadio);
+    userEvent.click(searchExecButton);
     await waitFor(() => expect(global.fetch).toBeCalled());
 
-    userEvent.click(nameRadio2);
-    userEvent.click(searchExecButton2);
+    userEvent.click(nameRadio);
+    userEvent.click(searchExecButton);
     await waitFor(() => expect(global.fetch).toBeCalled());
 
-    userEvent.click(firstLetterRadio2);
-    userEvent.click(searchExecButton2);
+    userEvent.click(firstLetterRadio);
+    userEvent.click(searchExecButton);
     await waitFor(() => expect(global.fetch).toBeCalled());
 
-    userEvent.type(searchInput2, 'aaa');
-    userEvent.click(firstLetterRadio2);
-    userEvent.click(searchExecButton2);
+    userEvent.type(searchInput, 'aaa');
+    userEvent.click(firstLetterRadio);
+    userEvent.click(searchExecButton);
     expect(global.alert).toBeCalled();
   });
 
@@ -151,11 +158,11 @@ describe('testes do componente SearchBar', () => {
     const title = screen.getByText(/foods/i);
     expect(title).toBeInTheDocument();
 
-    const searchButton = screen.getByTestId('search-top-btn');
+    const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
     userEvent.click(searchButton);
-    const nameRadio = screen.getByTestId('name-search-radio');
-    const searchExecButton = screen.getByTestId('exec-search-btn');
-    const searchInput = screen.getByTestId('search-input');
+    const nameRadio = screen.getByTestId(NAME_SEARCH_RADIO);
+    const searchExecButton = screen.getByTestId(EXEC_SEARCH_BTN);
+    const searchInput = screen.getByTestId(SEARCH_INPUT);
 
     expect(nameRadio).toBeInTheDocument();
     expect(searchInput).toBeInTheDocument();
@@ -177,11 +184,11 @@ describe('testes do componente SearchBar', () => {
     const title = screen.getByText(/drinks/i);
     expect(title).toBeInTheDocument();
 
-    const searchButton = screen.getByTestId('search-top-btn');
+    const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
     userEvent.click(searchButton);
-    const nameRadio = screen.getByTestId('name-search-radio');
-    const searchExecButton = screen.getByTestId('exec-search-btn');
-    const searchInput = screen.getByTestId('search-input');
+    const nameRadio = screen.getByTestId(NAME_SEARCH_RADIO);
+    const searchExecButton = screen.getByTestId(EXEC_SEARCH_BTN);
+    const searchInput = screen.getByTestId(SEARCH_INPUT);
 
     expect(nameRadio).toBeInTheDocument();
     expect(searchInput).toBeInTheDocument();
@@ -202,11 +209,11 @@ describe('testes do componente SearchBar', () => {
       json: () => Promise.resolve(emptyDrinks),
     }));
 
-    const searchButton = screen.getByTestId('search-top-btn');
+    const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
     userEvent.click(searchButton);
-    const nameRadio = screen.getByTestId('name-search-radio');
-    const searchExecButton = screen.getByTestId('exec-search-btn');
-    const searchInput = screen.getByTestId('search-input');
+    const nameRadio = screen.getByTestId(NAME_SEARCH_RADIO);
+    const searchExecButton = screen.getByTestId(EXEC_SEARCH_BTN);
+    const searchInput = screen.getByTestId(SEARCH_INPUT);
 
     userEvent.click(nameRadio);
     userEvent.type(searchInput, 'xablau');
@@ -225,11 +232,11 @@ describe('testes do componente SearchBar', () => {
       json: () => Promise.resolve(emptyMeals),
     }));
 
-    const searchButton = screen.getByTestId('search-top-btn');
+    const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
     userEvent.click(searchButton);
-    const nameRadio = screen.getByTestId('name-search-radio');
-    const searchExecButton = screen.getByTestId('exec-search-btn');
-    const searchInput = screen.getByTestId('search-input');
+    const nameRadio = screen.getByTestId(NAME_SEARCH_RADIO);
+    const searchExecButton = screen.getByTestId(EXEC_SEARCH_BTN);
+    const searchInput = screen.getByTestId(SEARCH_INPUT);
 
     userEvent.click(nameRadio);
     userEvent.type(searchInput, 'xablau');

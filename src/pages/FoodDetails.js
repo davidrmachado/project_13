@@ -10,7 +10,7 @@ function FoodDetails() {
 
   useEffect(() => {
     document.title = 'Food Details';
-    setTitle(document.title); // ?
+    setTitle(document.title);
   }, []);
   return (
     <div>
