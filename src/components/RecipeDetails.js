@@ -6,7 +6,7 @@ import AppContext from '../context/AppContext';
 import { drinkDetailAPI } from '../services/drinkAPI';
 import DetailCards from './DetailCard';
 
-function RecipeDetails({ type, id }) {
+function RecipeDetails({ id }) {
   const {
     detail,
     setDetail,
@@ -164,7 +164,7 @@ function RecipeDetails({ type, id }) {
 }
 
 RecipeDetails.propTypes = {
-  type: PropTypes.string.isRequired,
+  // type: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };
 
