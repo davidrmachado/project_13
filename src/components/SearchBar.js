@@ -17,22 +17,30 @@ import {
 export default function SearchBar() {
   const history = useHistory();
   const [searchId, setSearchId] = useState('');
-  const { searchInput, title } = useContext(AppContext);
+  const { searchInput, title, setRenderCards } = useContext(AppContext);
   const [searchResult, setSearchResult] = useState([]);
 
   useEffect(() => {
-    switch (title) {
-    case 'Foods':
-      if (searchResult.length === 1) {
+    if (title === 'Foods') {
+      if (searchResult === null) {
+        global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      } else if (searchResult.length === 1) {
         history.push(`/foods/${searchResult[0].idMeal}`);
+      } else {
+        setRenderCards(searchResult);
       }
-      break;
-    case 'Drinks':
-      if (searchResult.length === 1) {
+    }
+  }, [searchResult]);
+
+  useEffect(() => {
+    if (title === 'Drinks') {
+      if (searchResult === null) {
+        global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      } else if (searchResult.length === 1) {
         history.push(`/drinks/${searchResult[0].idDrink}`);
+      } else {
+        setRenderCards(searchResult);
       }
-      break;
-    default: console.log('default');
     }
   }, [searchResult]);
 
@@ -58,7 +66,6 @@ export default function SearchBar() {
       return setSearchResult(isFetch.drinks);
     } if (searchId === 'name') {
       const isFetch = await fetchDrinkNames(searchInput);
-      console.log(isFetch);
       return setSearchResult(isFetch.drinks);
     } if (searchId === 'first-letter') {
       if (searchInput.length > 1) {

@@ -1,17 +1,23 @@
 import React, { useContext, useEffect } from 'react';
 import AppContext from '../context/AppContext';
+// import RecipeDetails from '../components/RecipeDetails';
 
 function FoodDetails() {
   const {
     setTitle,
+    // id,
   } = useContext(AppContext);
 
   useEffect(() => {
     document.title = 'Food Details';
-    setTitle(document.title); // ?
+    setTitle(document.title);
   }, []);
   return (
-    <h1>food details</h1>
+    <div>
+      <h1>{ document.title }</h1>
+      {/* <RecipeDetails type="foods" id={ id } /> */}
+
+    </div>
   );
 }
 

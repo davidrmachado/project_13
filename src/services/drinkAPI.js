@@ -39,3 +39,10 @@ export async function fetchDrinksCategories() { // api para retornar lista do re
   const data = await response.json();
   return data.drinks;
 }
+
+export async function drinkDetailAPI(id) { // api para retornar os detalhes da bebida
+  const request = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+  const data = await request.json();
+  console.log(data);
+  return data.drinks;
+}
