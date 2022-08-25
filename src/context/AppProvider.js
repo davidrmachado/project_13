@@ -8,12 +8,15 @@ function AppProvider({ children }) {
   // const [password, setPassword] = useState('');
   const [title, setTitle] = useState('');
   const [searchInput, setSearchInput] = useState('');
+  const [globalRecipes, setGlobalRecipes] = useState({});
 
   const context = {
     title,
     setTitle,
     searchInput,
     setSearchInput,
+    globalRecipes,
+    setGlobalRecipes,
   };
 
   return (

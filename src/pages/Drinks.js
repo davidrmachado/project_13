@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import AppContext from '../context/AppContext';
 import Header from '../components/Header';
+import Recipes from '../components/Recipes';
 import Footer from '../components/Footer';
 
 function Drinks() {
@@ -15,6 +16,7 @@ function Drinks() {
   return (
     <>
       <Header />
+      <Recipes type="drinks" />
       <Footer />
     </>
   );
