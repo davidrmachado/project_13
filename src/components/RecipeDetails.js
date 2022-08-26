@@ -15,6 +15,8 @@ function RecipeDetails({ type, id }) {
     setidProgress,
     detail,
     setDetail,
+    startedRecipe,
+    doneRecipe,
   } = useContext(AppContext);
 
   const [alert, setAlert] = useState(false);
@@ -82,28 +84,24 @@ function RecipeDetails({ type, id }) {
   const handleFavorite = (typer) => {
     if (typer === 'drinks') {
       const localStorage = detail.map((recipe) => (
-        {
-          id: recipe.idDrink,
+        { id: recipe.idDrink,
           type: 'drink',
           nationality: '',
           category: recipe.strCategory,
           alcoholicOrNot: recipe.strAlcoholic,
           name: recipe.strDrink,
-          image: recipe.strDrinkThumb,
-        }
+          image: recipe.strDrinkThumb }
       ));
       window.localStorage.setItem('favoriteRecipes', JSON.stringify(localStorage));
     } else if (typer === 'foods') {
       const localStorage = detail.map((recipe) => (
-        {
-          id: recipe.idMeal,
+        { id: recipe.idMeal,
           type: 'food',
           nationality: recipe.strArea,
           category: recipe.strCategory,
           alcoholicOrNot: '',
           name: recipe.strMeal,
-          image: recipe.strMealThumb,
-        }
+          image: recipe.strMealThumb }
       ));
       window.localStorage.setItem('favoriteRecipes', JSON.stringify(localStorage));
     }
@@ -133,14 +131,6 @@ function RecipeDetails({ type, id }) {
             <DetailCards typeOf={ type } />
             <h4>YouTube Video</h4>
             {handleYoutube(item.strYoutube)}
-            <Link
-              data-testid="start-recipe-btn"
-              to={ `/${type}/${id}/in-progress` }
-              position="static"
-              style={ { position: 'fixed', bottom: '0px' } }
-            >
-              Continue Recipe
-            </Link>
             <button
               data-testid="share-btn"
               style={ { position: 'fixed', bottom: '0px', marginLeft: '300px' } }
@@ -158,6 +148,28 @@ function RecipeDetails({ type, id }) {
             >
               Favorite
             </button>
+            {!doneRecipe
+        && (
+          startedRecipe
+            ? (
+              <Link
+                data-testid="start-recipe-btn"
+                style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
+                to={ `/${type}/${id}/in-progress` }
+              >
+                Continue Recipe
+              </Link>
+            )
+            : (
+              <Link
+                data-testid="start-recipe-btn"
+                style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
+                to={ `/${type}/${id}/in-progress` }
+              >
+                Start Recipe
+              </Link>
+            )
+        )}
           </div>
         ))}
       </div>
@@ -183,14 +195,6 @@ function RecipeDetails({ type, id }) {
             <h4>Ingridients</h4>
             <ul>{handleIngMeaDrink(Object.entries(item))}</ul>
             <DetailCards typeOf={ type } />
-            <Link
-              data-testid="start-recipe-btn"
-              to={ `/${type}/${id}/in-progress` }
-              position="static"
-              style={ { position: 'fixed', bottom: '0px' } }
-            >
-              Continue Recipe
-            </Link>
             <button
               data-testid="share-btn"
               style={ { position: 'fixed', bottom: '0px', marginLeft: '300px' } }
@@ -208,6 +212,28 @@ function RecipeDetails({ type, id }) {
             >
               Favorite
             </button>
+            {!doneRecipe
+            && (
+              startedRecipe
+                ? (
+                  <Link
+                    data-testid="start-recipe-btn"
+                    style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
+                    to={ `/${type}/${id}/in-progress` }
+                  >
+                    Continue Recipe
+                  </Link>
+                )
+                : (
+                  <Link
+                    data-testid="start-recipe-btn"
+                    style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
+                    to={ `/${type}/${id}/in-progress` }
+                  >
+                    Start Recipe
+                  </Link>
+                )
+            )}
           </div>
         ))}
       </div>
