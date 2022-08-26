@@ -15,6 +15,8 @@ function FoodInProgress() {
     startedRecipe,
     setTipo,
     setDetail,
+    // inProgressRecipes,
+    // setInProgressRecipes,
   } = useContext(AppContext);
 
   const history = useHistory();
@@ -44,6 +46,12 @@ function FoodInProgress() {
     }
   }, []);
 
+  // const handleCheckbox = ({ target }) => {
+  //   console.log(target.id);
+  //   localStorage.setItem('inProgressRecipes', JSON
+  //     .stringify([...inProgressRecipes, obj]));
+  // };
+
   const handleIngMeaDrink = (data) => {
     const filteredIngredients = data.filter((key) => key[0]
       .includes('strIngredient') && (key[1] !== null && key[1] !== ''));
@@ -57,7 +65,9 @@ function FoodInProgress() {
         <li key={ index } data-testid={ `${index}-ingredient-step` }>
           <input
             key={ index }
+            id={ index }
             type="checkbox"
+            // onChange={ handleCheckbox }
           />
           {string}
         </li>
@@ -121,18 +131,28 @@ function FoodInProgress() {
               startedRecipe
                 ? (
                   <Link
-                    data-testid="start-recipe-btn"
                     to={ `/${tipo}/${idProgress}/in-progress` }
                   >
-                    Continue Recipe
+                    <button
+                      type="button"
+                      // onClick={ handleCheckbox }
+                      data-testid="start-recipe-btn"
+                    >
+                      Continue Recipe
+                    </button>
                   </Link>
                 )
                 : (
                   <Link
-                    data-testid="start-recipe-btn"
                     to={ `/${tipo}/${idProgress}/in-progress` }
                   >
-                    Start Recipe
+                    <button
+                      type="button"
+                      // onClick={ handleCheckbox }
+                      data-testid="start-recipe-btn"
+                    >
+                      Start Recipe
+                    </button>
                   </Link>
                 )
             )}
