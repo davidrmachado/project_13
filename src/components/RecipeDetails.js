@@ -154,7 +154,7 @@ function RecipeDetails({ type, id }) {
             ? (
               <Link
                 data-testid="start-recipe-btn"
-                style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
+                style={ { position: 'fixed', bottom: '0px', marginLeft: '0px' } }
                 to={ `/${type}/${id}/in-progress` }
               >
                 Continue Recipe
@@ -163,7 +163,7 @@ function RecipeDetails({ type, id }) {
             : (
               <Link
                 data-testid="start-recipe-btn"
-                style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
+                style={ { position: 'fixed', bottom: '0px', marginLeft: '0px' } }
                 to={ `/${type}/${id}/in-progress` }
               >
                 Start Recipe
@@ -218,7 +218,7 @@ function RecipeDetails({ type, id }) {
                 ? (
                   <Link
                     data-testid="start-recipe-btn"
-                    style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
+                    style={ { position: 'fixed', bottom: '0px', marginLeft: '0px' } }
                     to={ `/${type}/${id}/in-progress` }
                   >
                     Continue Recipe
@@ -227,7 +227,7 @@ function RecipeDetails({ type, id }) {
                 : (
                   <Link
                     data-testid="start-recipe-btn"
-                    style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
+                    style={ { position: 'fixed', bottom: '0px', marginLeft: '0px' } }
                     to={ `/${type}/${id}/in-progress` }
                   >
                     Start Recipe
