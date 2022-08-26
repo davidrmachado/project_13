@@ -14,6 +14,7 @@ const PROFILE_EMAIL = 'profile-email';
 const PROFILE_DONE = 'profile-done-btn';
 const PROFILE_FAVORITE = 'profile-favorite-btn';
 const LOGOUT_BUTTON = 'profile-logout-btn';
+const EMAIL_TEST = 'teste@teste.com';
 
 describe('Testes do componente Profile', () => {
   test('Verifica se os elementos são renderizados', () => {
@@ -21,7 +22,7 @@ describe('Testes do componente Profile', () => {
     const history = createMemoryHistory();
 
     const emailInput = screen.getByTestId(EMAIL_INPUT);
-    userEvent.type(emailInput, 'teste@teste.com');
+    userEvent.type(emailInput, EMAIL_TEST);
     const passwordInput = screen.getByTestId(PASSWORD_INPUT);
     userEvent.type(passwordInput, '1234567');
 
@@ -53,7 +54,7 @@ describe('Testes do componente Profile', () => {
     const history = createMemoryHistory();
 
     const emailInput = screen.getByTestId(EMAIL_INPUT);
-    userEvent.type(emailInput, 'teste@teste.com');
+    userEvent.type(emailInput, EMAIL_TEST);
     const passwordInput = screen.getByTestId(PASSWORD_INPUT);
     userEvent.type(passwordInput, '1234567');
     const buttonSubmit = screen.getByTestId(LOGIN_BUTTON);
@@ -75,7 +76,7 @@ describe('Testes do componente Profile', () => {
     const history = createMemoryHistory();
 
     const emailInput = screen.getByTestId(EMAIL_INPUT);
-    userEvent.type(emailInput, 'teste@teste.com');
+    userEvent.type(emailInput, EMAIL_TEST);
     const passwordInput = screen.getByTestId(PASSWORD_INPUT);
     userEvent.type(passwordInput, '1234567');
     const buttonSubmit = screen.getByTestId(LOGIN_BUTTON);
