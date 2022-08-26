@@ -138,6 +138,26 @@ function RecipeDetails({ id, type }) {
   } if (type === 'drinks') {
     return (
       <div>
+        {!doneRecipe
+            && (
+              startedRecipe
+                ? (
+                  <Link
+                    data-testid="start-recipe-btn"
+                    to={ `/${type}/${id}/in-progress` }
+                  >
+                    Continue Recipe
+                  </Link>
+                )
+                : (
+                  <Link
+                    data-testid="start-recipe-btn"
+                    to={ `/${type}/${id}/in-progress` }
+                  >
+                    Start Recipe
+                  </Link>
+                )
+            )}
         {detail.map((item, index) => (
           <div key={ index }>
             <h1 data-testid="recipe-title">{item.strDrink}</h1>
@@ -161,26 +181,6 @@ function RecipeDetails({ id, type }) {
               {handleIngMeaDrink(Object.entries(item))}
             </ul>
             <DetailCards typeOf={ type } />
-            {!doneRecipe
-            && (
-              startedRecipe
-                ? (
-                  <Link
-                    data-testid="start-recipe-btn"
-                    to={ `/${type}/${id}/in-progress` }
-                  >
-                    Continue Recipe
-                  </Link>
-                )
-                : (
-                  <Link
-                    data-testid="start-recipe-btn"
-                    to={ `/${type}/${id}/in-progress` }
-                  >
-                    Start Recipe
-                  </Link>
-                )
-            )}
           </div>
 
         ))}

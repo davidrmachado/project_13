@@ -1,22 +1,78 @@
 import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import AppContext from '../context/AppContext';
+import { foodDetailAPI } from '../services/foodAPI';
+import { drinkDetailAPI } from '../services/drinkAPI';
 import DetailCards from '../components/DetailCard';
 
 function FoodInProgress() {
   const {
     idProgress,
+    setidProgress,
     tipo,
-    setTitle,
     detail,
+    doneRecipe,
+    startedRecipe,
+    setTipo,
+    setDetail,
   } = useContext(AppContext);
 
+  const history = useHistory();
+  const { pathname } = history.location;
+
+  async function getFoodDetails() {
+    const id = pathname.replace(/\D/g, '');
+    const { meals } = await foodDetailAPI(id);
+    setDetail(meals);
+    setidProgress(id);
+  }
+
+  // useEffect(() => {
+  //   document.title = 'Food In Progress';
+  //   setTitle(document.title);
+  //   getFoodDetails();
+  // }, []);
+
+  async function getDrinkDetails() {
+    const id = pathname.replace(/\D/g, '');
+    const { drinks } = await drinkDetailAPI(id);
+    setidProgress(id);
+    setDetail(drinks);
+  }
+
+  detail.map((item) => console.log(item));
+
   useEffect(() => {
-    document.title = 'Food In Progress';
-    setTitle(document.title);
+    if (pathname.includes('foods')) {
+      console.log('FOODS');
+      setTipo('foods');
+      getFoodDetails();
+    } else if (pathname.includes('drinks')) {
+      setTipo('drinks');
+      getDrinkDetails();
+    }
   }, []);
 
-  if (tipo === 'foods') {
+  const handleIngMeaDrink = (data) => {
+    const filteredIngredients = data.filter((key) => key[0]
+      .includes('strIngredient') && (key[1] !== null && key[1] !== ''));
+    const ingArray = filteredIngredients.reduce((acc, value) => [...acc, value[1]], []);
+    const filteredMeasures = data.filter((key) => key[0]
+      .includes('strMeasure') && (key[1] !== null && key[1] !== ' '));
+    const meaArray = filteredMeasures.reduce((acc, value) => [...acc, value[1]], []);
+    const arrayToMap = ingArray.map((ing, index) => `${ing} - ${meaArray[index]}`);
+
+    return (
+      arrayToMap.map((string, index) => (
+        <li
+          key={ index }
+          data-testid={ `${index}-ingredient-step` }
+        >
+          {string}
+        </li>)));
+  };
+
+  if (pathname.includes('foods')) {
     return (
       <div>
         {detail.map((item, index) => (
@@ -44,12 +100,27 @@ function FoodInProgress() {
             <ul>
               {handleIngMeaDrink(Object.entries(item))}
             </ul>
+            <button
+              type="button"
+              data-testid="share-btn"
+            >
+              Share
+            </button>
+            <button
+              type="button"
+              data-testid="favorite-btn"
+            >
+              Favorite
+            </button>
+            <button
+              type="button"
+              data-testid="finish-recipe-btn"
+            >
+              Finish recipe
+            </button>
 
             <h4>Recomended Drinks</h4>
             <DetailCards typeOf={ tipo } />
-
-            <h4>YouTube Video</h4>
-            {handleYoutube(item.strYoutube)}
           </div>
 
         ))}
@@ -75,7 +146,8 @@ function FoodInProgress() {
             )}
       </div>
     );
-  } if (tipo === 'drinks') {
+  }
+  if (pathname.includes('drinks')) {
     return (
       <div>
         {detail.map((item, index) => (
@@ -92,6 +164,10 @@ function FoodInProgress() {
             <p>
               {item.strAlcoholic}
             </p>
+            <h4>Category</h4>
+            <p data-testid="recipe-category">
+              {item.strCategory}
+            </p>
             <h4> Intructions </h4>
             <p data-testid="instructions">
               {item.strInstructions}
@@ -100,6 +176,25 @@ function FoodInProgress() {
             <ul>
               {handleIngMeaDrink(Object.entries(item))}
             </ul>
+
+            <button
+              type="button"
+              data-testid="share-btn"
+            >
+              Share
+            </button>
+            <button
+              type="button"
+              data-testid="favorite-btn"
+            >
+              Favorite
+            </button>
+            <button
+              type="button"
+              data-testid="finish-recipe-btn"
+            >
+              Finish recipe
+            </button>
             <DetailCards typeOf={ tipo } />
             {!doneRecipe
             && (

@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 function DrinkDetails() {
   const {
     setTitle,
-    // id,
+    id,
   } = useContext(AppContext);
 
   useEffect(() => {

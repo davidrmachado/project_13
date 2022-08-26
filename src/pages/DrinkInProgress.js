@@ -8,7 +8,7 @@ function DrinkInProgress() {
 
   useEffect(() => {
     document.title = 'Drink In Progress';
-    setTitle(document.title); // ?
+    setTitle(document.title);
   }, []);
   return (
     <h1>Drink in progress</h1>
