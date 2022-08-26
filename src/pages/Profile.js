@@ -17,7 +17,11 @@ function Profile() {
     document.title = 'Profile';
     setTitle(document.title);
     const userEmail = JSON.parse(localStorage.getItem('user'));
-    setUser(userEmail);
+    if (userEmail !== null) {
+      setUser(userEmail);
+    } else {
+      setUser({ email: 'email@mail.com' });
+    }
   }, []);
 
   const handleLogoutClick = () => {
@@ -29,7 +33,10 @@ function Profile() {
     <>
       <Header />
       <div>
-        <h3 data-testid="profile-email">{user.email}</h3>
+        <h3 data-testid="profile-email">
+          email:
+          {user.email}
+        </h3>
         <button
           type="button"
           data-testid="profile-done-btn"

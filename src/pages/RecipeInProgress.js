@@ -27,12 +27,6 @@ function FoodInProgress() {
     setidProgress(id);
   }
 
-  // useEffect(() => {
-  //   document.title = 'Food In Progress';
-  //   setTitle(document.title);
-  //   getFoodDetails();
-  // }, []);
-
   async function getDrinkDetails() {
     const id = pathname.replace(/\D/g, '');
     const { drinks } = await drinkDetailAPI(id);
@@ -40,11 +34,8 @@ function FoodInProgress() {
     setDetail(drinks);
   }
 
-  detail.map((item) => console.log(item));
-
   useEffect(() => {
     if (pathname.includes('foods')) {
-      console.log('FOODS');
       setTipo('foods');
       getFoodDetails();
     } else if (pathname.includes('drinks')) {
@@ -61,15 +52,16 @@ function FoodInProgress() {
       .includes('strMeasure') && (key[1] !== null && key[1] !== ' '));
     const meaArray = filteredMeasures.reduce((acc, value) => [...acc, value[1]], []);
     const arrayToMap = ingArray.map((ing, index) => `${ing} - ${meaArray[index]}`);
-
     return (
       arrayToMap.map((string, index) => (
-        <li
-          key={ index }
-          data-testid={ `${index}-ingredient-step` }
-        >
+        <li key={ index } data-testid={ `${index}-ingredient-step` }>
+          <input
+            key={ index }
+            type="checkbox"
+          />
           {string}
-        </li>)));
+        </li>
+      )));
   };
 
   if (pathname.includes('foods')) {

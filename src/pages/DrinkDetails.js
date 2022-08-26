@@ -1,24 +1,30 @@
 import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 import RecipeDetails from '../components/RecipeDetails';
-// import Footer from '../components/Footer';
 
 function DrinkDetails() {
   const {
     setTitle,
-    id,
+    // idProgress,
+    // setidProgress,
   } = useContext(AppContext);
+
+  const history = useHistory();
+  const { pathname } = history.location;
+  const id = pathname.replace(/\D/g, '');
 
   useEffect(() => {
     document.title = 'Drink Details';
-    setTitle(document.title); // ?
+    setTitle(document.title);
+    // const id = pathname.replace(/\D/g, '');
+    // setidProgress(id);
   }, []);
 
   return (
     <div>
       <h1>{ document.title }</h1>
-      <RecipeDetails type="drinks" id="178319" />
-      {/* <Footer /> */}
+      <RecipeDetails type="drinks" id={ id } />
     </div>
   );
 }
