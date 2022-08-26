@@ -11,8 +11,14 @@ function AppProvider({ children }) {
   const [doneRecipe, setDoneRecipe] = useState(false);
   const [startedRecipe, setStartedRecipe] = useState(false);
   const [globalRecipes, setGlobalRecipes] = useState({});
+  const [tipo, setTipo] = useState();
+  const [idProgress, setidProgress] = useState();
 
   const context = {
+    idProgress,
+    setidProgress,
+    tipo,
+    setTipo,
     title,
     setTitle,
     searchInput,

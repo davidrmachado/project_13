@@ -9,26 +9,31 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 function RecipeDetails({ type, id }) {
   const history = useHistory();
+
   const {
+    setTipo,
+    setidProgress,
     detail,
     setDetail,
-    // doneRecipe,
-    // startedRecipe,
   } = useContext(AppContext);
 
   async function getFoodDetails() {
     const { meals } = await foodDetailAPI(id);
     setDetail(meals);
+    setidProgress(id);
   }
   async function getDrinkDetails() {
     const { drinks } = await drinkDetailAPI(id);
+    setidProgress(id);
     setDetail(drinks);
   }
 
   useEffect(() => {
     if (type === 'foods') {
+      setTipo('foods');
       getFoodDetails();
     } else if (type === 'drinks') {
+      setTipo('drinks');
       getDrinkDetails();
     }
   }, []);
@@ -69,7 +74,7 @@ function RecipeDetails({ type, id }) {
   const handleShare = () => {
     const copyText = `http://localhost:3000${history.location.pathname}`;
     navigator.clipboard.writeText(copyText);
-    alert('Link copied!');
+    global.alert('Link copied!');
   };
 
   const handleFavorite = (typer) => {

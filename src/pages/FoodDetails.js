@@ -6,7 +6,7 @@ import RecipeDetails from '../components/RecipeDetails';
 function FoodDetails() {
   const {
     setTitle,
-    // id,
+    id,
   } = useContext(AppContext);
 
   useEffect(() => {

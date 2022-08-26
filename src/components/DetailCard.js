@@ -48,7 +48,7 @@ function DetailCards({ typeOf }) {
           </p>
         </button>
       ));
-      console.log(returnArray);
+
       return (
         <Carousel swiping autoplay>
           {returnArray}
@@ -57,7 +57,6 @@ function DetailCards({ typeOf }) {
     } if (typeR === 'drinks') {
       const { drinks } = data;
       const sliced = drinks.slice(0, SIX);
-      console.log(sliced);
       const returnArray = sliced.map((recipe, index) => (
         <button
           key={ recipe.idDrink }
@@ -77,7 +76,7 @@ function DetailCards({ typeOf }) {
           </p>
         </button>
       ));
-      console.log(returnArray);
+
       return (
         <Carousel swiping autoplay>
           {returnArray}

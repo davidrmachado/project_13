@@ -8,12 +8,12 @@ function Card({ name, thumb, index, type, id }) {
   const history = useHistory();
 
   function redirectToDetails() {
+    setId(id);
     if (type === 'foods') {
       history.push(`/foods/${id}`);
     } else {
       history.push(`/drinks/${id}`);
     }
-    setId(id);
   }
   return (
     <div data-testid={ `${index}-recipe-card` }>
