@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import { foodDetailAPI } from '../services/foodAPI';
@@ -16,6 +16,8 @@ function RecipeDetails({ type, id }) {
     detail,
     setDetail,
   } = useContext(AppContext);
+
+  const [alert, setAlert] = useState(false);
 
   async function getFoodDetails() {
     const { meals } = await foodDetailAPI(id);
@@ -74,7 +76,7 @@ function RecipeDetails({ type, id }) {
   const handleShare = () => {
     const copyText = `http://localhost:3000${history.location.pathname}`;
     navigator.clipboard.writeText(copyText);
-    global.alert('Link copied!');
+    setAlert(true);
   };
 
   const handleFavorite = (typer) => {
@@ -120,6 +122,7 @@ function RecipeDetails({ type, id }) {
               width="420"
               height="345"
             />
+            { alert && <p>Link copied!</p> }
             <h4>Category</h4>
             <p data-testid="recipe-category">{item.strCategory}</p>
             <h4> Intructions </h4>
@@ -172,6 +175,7 @@ function RecipeDetails({ type, id }) {
               width="420"
               height="345"
             />
+            { alert && <p>Link copied!</p> }
             <h4>Category</h4>
             <p data-testid="recipe-category">{item.strAlcoholic}</p>
             <h4> Intructions </h4>
