@@ -14,7 +14,10 @@ import { handleShare,
 function RecipeDetails({ type, id }) {
   const history = useHistory();
   const { pathname } = history.location;
-
+  const objImg = {
+    black: blackHeartIcon,
+    white: whiteHeartIcon,
+  };
   const {
     setTipo,
     setidProgress,
@@ -118,9 +121,10 @@ function RecipeDetails({ type, id }) {
             <button
               data-testid="favorite-btn"
               type="button"
+              id="favorite-btn"
               style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
               src={ handleHeart(id, favorites, whiteHeartIcon, blackHeartIcon) }
-              onClick={ () => handleFavorite(type, detail, setFavorites) }
+              onClick={ () => handleFavorite(type, detail, setFavorites, objImg) }
             >
               Favorite
             </button>
@@ -182,9 +186,10 @@ function RecipeDetails({ type, id }) {
             <button
               data-testid="favorite-btn"
               type="button"
+              id="favorite-btn"
               style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
               src={ handleHeart(id, favorites, whiteHeartIcon, blackHeartIcon) }
-              onClick={ () => handleFavorite(type, detail, setFavorites) }
+              onClick={ () => handleFavorite(type, detail, setFavorites, objImg) }
             >
               Favorite
             </button>

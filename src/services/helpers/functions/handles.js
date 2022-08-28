@@ -16,7 +16,12 @@ export const handleShare = (pathname, func) => {
   func(true);
 };
 
-export const handleFavorite = (type, array, setFav) => {
+export const handleFavorite = (type, array, setFav, objImg) => {
+  const favoriteButton = document.getElementById('favorite-btn');
+  const { attributes } = favoriteButton;
+  const { src } = attributes;
+  const { nodeValue } = src;
+
   if (type === 'drinks') {
     const localStorage = array.map((recipe) => (
       { id: recipe.idDrink,
@@ -29,6 +34,11 @@ export const handleFavorite = (type, array, setFav) => {
     ));
     window.localStorage.setItem('favoriteRecipes', JSON.stringify(localStorage));
     setFav((prevState) => [...prevState, array[0].idDrink]);
+    if (nodeValue.includes('white')) {
+      favoriteButton.setAttribute('src', objImg.black);
+    } else if (nodeValue.includes('black')) {
+      favoriteButton.setAttribute('src', objImg.white);
+    }
   } else if (type === 'foods') {
     const localStorage = array.map((recipe) => (
       { id: recipe.idMeal,
@@ -41,16 +51,18 @@ export const handleFavorite = (type, array, setFav) => {
     ));
     window.localStorage.setItem('favoriteRecipes', JSON.stringify(localStorage));
     setFav((prevState) => [...prevState, array[0].idMeal]);
+    if (nodeValue.includes('white')) {
+      favoriteButton.setAttribute('src', objImg.black);
+    } else if (nodeValue.includes('black')) {
+      favoriteButton.setAttribute('src', objImg.white);
+    }
   }
 };
 
 export const handleHeart = (id, fav, white, black) => {
-  // const teste = document.getElementById('teste').attributes.src;
   const checked = fav.includes(id);
   if (checked) {
-    console.log(document.getElementById('teste'));
-    return black;
+    return white;
   }
-  // teste.includes('white') ? teste = black : teste = white;
-  return white;
+  return black;
 };
