@@ -14,10 +14,7 @@ import { handleShare,
 function RecipeDetails({ type, id }) {
   const history = useHistory();
   const { pathname } = history.location;
-  const objImg = {
-    black: blackHeartIcon,
-    white: whiteHeartIcon,
-  };
+  const objImg = { black: blackHeartIcon, white: whiteHeartIcon };
   const {
     setTipo,
     setidProgress,

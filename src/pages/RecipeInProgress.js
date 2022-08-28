@@ -4,7 +4,10 @@ import AppContext from '../context/AppContext';
 import { foodDetailAPI } from '../services/foodAPI';
 import { drinkDetailAPI } from '../services/drinkAPI';
 import DetailCards from '../components/DetailCard';
-import { handleFavorite, handleShare } from '../services/helpers/functions/handles';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import { handleFavorite,
+  handleShare, handleHeart } from '../services/helpers/functions/handles';
 
 function FoodInProgress() {
   const {
@@ -20,8 +23,9 @@ function FoodInProgress() {
     alert,
     setAlert,
     favorites,
+    setFavorites,
   } = useContext(AppContext);
-
+  const objImg = { black: blackHeartIcon, white: whiteHeartIcon };
   const history = useHistory();
   const { pathname } = history.location;
 
@@ -105,7 +109,9 @@ function FoodInProgress() {
             <button
               type="button"
               data-testid="favorite-btn"
-              onClick={ handleFavorite(tipo, detail, favorites) }
+              id="favorite-btn"
+              src={ handleHeart(idProgress, favorites, whiteHeartIcon, blackHeartIcon) }
+              onClick={ () => handleFavorite(tipo, detail, setFavorites, objImg) }
             >
               Favorite
             </button>
@@ -185,7 +191,9 @@ function FoodInProgress() {
             <button
               type="button"
               data-testid="favorite-btn"
-              onClick={ handleFavorite(tipo, detail, favorites) }
+              id="favorite-btn"
+              src={ handleHeart(idProgress, favorites, whiteHeartIcon, blackHeartIcon) }
+              onClick={ () => handleFavorite(tipo, detail, setFavorites, objImg) }
             >
               Favorite
             </button>
