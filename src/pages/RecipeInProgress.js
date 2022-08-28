@@ -4,6 +4,7 @@ import AppContext from '../context/AppContext';
 import { foodDetailAPI } from '../services/foodAPI';
 import { drinkDetailAPI } from '../services/drinkAPI';
 import DetailCards from '../components/DetailCard';
+import { handleFavorite, handleShare } from '../services/helpers/functions/handles';
 
 function FoodInProgress() {
   const {
@@ -12,9 +13,13 @@ function FoodInProgress() {
     tipo,
     detail,
     doneRecipe,
+    setDoneRecipe,
     startedRecipe,
     setTipo,
     setDetail,
+    alert,
+    setAlert,
+    favorites,
   } = useContext(AppContext);
 
   const history = useHistory();
@@ -77,17 +82,15 @@ function FoodInProgress() {
               width="420"
               height="345"
             />
-
             <h4>Category</h4>
             <p data-testid="recipe-category">
               {item.strCategory}
             </p>
-
+            {alert && <p>Link copied!</p>}
             <h4> Intructions </h4>
             <p data-testid="instructions">
               {item.strInstructions}
             </p>
-
             <h4>Ingridients</h4>
             <ul>
               {handleIngMeaDrink(Object.entries(item))}
@@ -95,22 +98,24 @@ function FoodInProgress() {
             <button
               type="button"
               data-testid="share-btn"
+              onClick={ () => handleShare(pathname, setAlert) }
             >
               Share
             </button>
             <button
               type="button"
               data-testid="favorite-btn"
+              onClick={ handleFavorite(tipo, detail, favorites) }
             >
               Favorite
             </button>
             <button
               type="button"
               data-testid="finish-recipe-btn"
+              onClick={ setDoneRecipe(true) }
             >
               Finish recipe
             </button>
-
             <h4>Recomended Drinks</h4>
             <DetailCards typeOf={ tipo } />
           </div>
@@ -152,6 +157,7 @@ function FoodInProgress() {
               width="420"
               height="345"
             />
+            {alert && <p>Link copied!</p>}
             <h4>Is alcoholic?</h4>
             <p>
               {item.strAlcoholic}
@@ -172,18 +178,21 @@ function FoodInProgress() {
             <button
               type="button"
               data-testid="share-btn"
+              onClick={ () => handleShare(pathname, setAlert) }
             >
               Share
             </button>
             <button
               type="button"
               data-testid="favorite-btn"
+              onClick={ handleFavorite(tipo, detail, favorites) }
             >
               Favorite
             </button>
             <button
               type="button"
               data-testid="finish-recipe-btn"
+              onClick={ setDoneRecipe(true) }
             >
               Finish recipe
             </button>

@@ -18,12 +18,7 @@ function DetailCards({ typeOf }) {
     };
     getRecomended();
   }, []);
-  // console.log(recomended);
-  // const { drinks } = recomended;
-  // console.log(drinks);
-  // const sliced = drinks.slice(0, SIX);
-  // sliced.map((teste) => console.log(teste.strDrink));
-  // ok
+
   const recomendedRenderer = (typeR, data) => {
     if (typeR === 'foods') {
       const { meals } = data;
