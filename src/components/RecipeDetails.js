@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import { foodDetailAPI } from '../services/foodAPI';
@@ -6,10 +6,18 @@ import AppContext from '../context/AppContext';
 import { drinkDetailAPI } from '../services/drinkAPI';
 import DetailCards from './DetailCard';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import { handleShare,
+  handleFavorite,
+  handleHeart } from '../services/helpers/functions/handles';
 
 function RecipeDetails({ type, id }) {
   const history = useHistory();
-
+  const { pathname } = history.location;
+  const objImg = {
+    black: blackHeartIcon,
+    white: whiteHeartIcon,
+  };
   const {
     setTipo,
     setidProgress,
@@ -17,9 +25,11 @@ function RecipeDetails({ type, id }) {
     setDetail,
     startedRecipe,
     doneRecipe,
+    alert,
+    setAlert,
+    setFavorites,
+    favorites,
   } = useContext(AppContext);
-
-  const [alert, setAlert] = useState(false);
 
   async function getFoodDetails() {
     const { meals } = await foodDetailAPI(id);
@@ -75,37 +85,6 @@ function RecipeDetails({ type, id }) {
       </div>
     );
   };
-  const handleShare = () => {
-    const copyText = `http://localhost:3000${history.location.pathname}`;
-    navigator.clipboard.writeText(copyText);
-    setAlert(true);
-  };
-
-  const handleFavorite = (typer) => {
-    if (typer === 'drinks') {
-      const localStorage = detail.map((recipe) => (
-        { id: recipe.idDrink,
-          type: 'drink',
-          nationality: '',
-          category: recipe.strCategory,
-          alcoholicOrNot: recipe.strAlcoholic,
-          name: recipe.strDrink,
-          image: recipe.strDrinkThumb }
-      ));
-      window.localStorage.setItem('favoriteRecipes', JSON.stringify(localStorage));
-    } else if (typer === 'foods') {
-      const localStorage = detail.map((recipe) => (
-        { id: recipe.idMeal,
-          type: 'food',
-          nationality: recipe.strArea,
-          category: recipe.strCategory,
-          alcoholicOrNot: '',
-          name: recipe.strMeal,
-          image: recipe.strMealThumb }
-      ));
-      window.localStorage.setItem('favoriteRecipes', JSON.stringify(localStorage));
-    }
-  };
 
   if (type === 'foods') {
     return (
@@ -133,18 +112,19 @@ function RecipeDetails({ type, id }) {
             {handleYoutube(item.strYoutube)}
             <button
               data-testid="share-btn"
-              style={ { position: 'fixed', bottom: '0px', marginLeft: '300px' } }
+              style={ { position: 'fixed', bottom: '0px', marginLeft: '290px' } }
               type="button"
-              onClick={ handleShare }
+              onClick={ () => handleShare(pathname, setAlert) }
             >
               Share
             </button>
             <button
               data-testid="favorite-btn"
               type="button"
+              id="favorite-btn"
               style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
-              src={ whiteHeartIcon }
-              onClick={ () => handleFavorite(type) }
+              src={ handleHeart(id, favorites, whiteHeartIcon, blackHeartIcon) }
+              onClick={ () => handleFavorite(type, detail, setFavorites, objImg) }
             >
               Favorite
             </button>
@@ -199,16 +179,17 @@ function RecipeDetails({ type, id }) {
               data-testid="share-btn"
               style={ { position: 'fixed', bottom: '0px', marginLeft: '300px' } }
               type="button"
-              onClick={ handleShare }
+              onClick={ () => handleShare(pathname, setAlert) }
             >
               Share
             </button>
             <button
               data-testid="favorite-btn"
               type="button"
+              id="favorite-btn"
               style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
-              src={ whiteHeartIcon }
-              onClick={ () => handleFavorite(type) }
+              src={ handleHeart(id, favorites, whiteHeartIcon, blackHeartIcon) }
+              onClick={ () => handleFavorite(type, detail, setFavorites, objImg) }
             >
               Favorite
             </button>
