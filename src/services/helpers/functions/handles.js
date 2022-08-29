@@ -66,3 +66,9 @@ export const handleHeart = (id, fav, white, black) => {
   }
   return black;
 };
+
+export const handleDoneRecipe = (setDone, history, setDoneRecipes) => {
+  setDone(true);
+  setDoneRecipes((prevState) => [...prevState, 'teste']);
+  history.push('/done-recipes');
+};
