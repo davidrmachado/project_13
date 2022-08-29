@@ -21,6 +21,18 @@ function RecipeDetails({ type, id }) {
     setStartedRecipe,
   } = useContext(AppContext);
 
+  const createInProgressRecipesStorage = () => {
+    const inProgressRecipesObject = {
+      meals: {},
+      cocktails: {},
+    };
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (inProgressRecipes === null) {
+      localStorage.setItem('inProgressRecipes', JSON
+        .stringify(inProgressRecipesObject));
+    }
+  };
+
   const [alert, setAlert] = useState(false);
 
   async function getFoodDetails() {
@@ -35,24 +47,36 @@ function RecipeDetails({ type, id }) {
     setDetail(drinks);
   }
 
-  const startOrContinue = () => {
+  const startOrContinueMeals = () => {
     const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (inProgressRecipes !== null) {
-      inProgressRecipes.map((item) => (item
-        .id === id ? setStartedRecipe(true) : setStartedRecipe(false)));
-    } else {
+    const { meals } = inProgressRecipes;
+    if (meals[id] === undefined) {
       setStartedRecipe(false);
+    } else {
+      setStartedRecipe(true);
+    }
+  };
+
+  const startOrContinueCocktails = () => {
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const { cocktails } = inProgressRecipes;
+    if (cocktails[id] === undefined) {
+      setStartedRecipe(false);
+    } else {
+      setStartedRecipe(true);
     }
   };
 
   useEffect(() => {
-    startOrContinue();
+    createInProgressRecipesStorage();
     if (type === 'foods') {
       setTipo('foods');
       getFoodDetails();
+      startOrContinueMeals();
     } else if (type === 'drinks') {
       setTipo('drinks');
       getDrinkDetails();
+      startOrContinueCocktails();
     }
   }, []);
 
@@ -60,17 +84,6 @@ function RecipeDetails({ type, id }) {
     const copyText = `http://localhost:3000${history.location.pathname}`;
     navigator.clipboard.writeText(copyText);
     setAlert(true);
-  };
-
-  const handleStartRecipe = (recipeId) => {
-    const obj = { id: recipeId, checkbox: [] };
-    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (inProgressRecipes !== null) {
-      localStorage.setItem('inProgressRecipes', JSON
-        .stringify([...inProgressRecipes, obj]));
-    } else {
-      localStorage.setItem('inProgressRecipes', JSON.stringify([obj]));
-    }
   };
 
   if (type === 'foods') {
@@ -120,7 +133,6 @@ function RecipeDetails({ type, id }) {
             ? (
               <Link
                 to={ `/${type}/${id}/in-progress` }
-                data-testid="start-recipe-btn"
               >
                 <button
                   data-testid="start-recipe-btn"
@@ -134,7 +146,6 @@ function RecipeDetails({ type, id }) {
             : (
               <Link
                 to={ `/${type}/${id}/in-progress` }
-                data-testid="start-recipe-btn"
               >
                 <button
                   data-testid="start-recipe-btn"

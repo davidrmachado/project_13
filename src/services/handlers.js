@@ -59,3 +59,18 @@ export const handleFavorite = (typer) => {
     window.localStorage.setItem('favoriteRecipes', JSON.stringify(localStorage));
   }
 };
+
+export const handleStartRecipe = (recipeId) => {
+  const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+  const { meals, cocktails } = inProgressRecipes;
+  if (type === 'foods') {
+    const obj = { meals: { ...meals, [recipeId]: [] }, cocktails: { ...cocktails } };
+    localStorage.setItem('inProgressRecipes', JSON
+      .stringify(obj));
+  } else {
+    const obj = { meals: { ...meals }, cocktails: { ...cocktails, [recipeId]: [] } };
+    localStorage.setItem('inProgressRecipes', JSON
+      .stringify(obj));
+  }
+};
