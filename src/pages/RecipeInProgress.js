@@ -4,7 +4,11 @@ import AppContext from '../context/AppContext';
 import { foodDetailAPI } from '../services/foodAPI';
 import { drinkDetailAPI } from '../services/drinkAPI';
 import DetailCards from '../components/DetailCard';
-import { handleFavorite, handleShare } from '../services/helpers/functions/handles';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import { handleFavorite,
+  handleShare, handleHeart,
+  handleDoneRecipe } from '../services/helpers/functions/handles';
 
 function FoodInProgress() {
   const {
@@ -13,15 +17,17 @@ function FoodInProgress() {
     tipo,
     detail,
     doneRecipe,
-    setDoneRecipe,
     startedRecipe,
     setTipo,
     setDetail,
     alert,
     setAlert,
     favorites,
+    setFavorites,
+    doneRecipes,
+    setDoneRecipes,
   } = useContext(AppContext);
-
+  const objImg = { black: blackHeartIcon, white: whiteHeartIcon };
   const history = useHistory();
   const { pathname } = history.location;
 
@@ -105,21 +111,22 @@ function FoodInProgress() {
             <button
               type="button"
               data-testid="favorite-btn"
-              onClick={ handleFavorite(tipo, detail, favorites) }
+              id="favorite-btn"
+              src={ handleHeart(idProgress, favorites, whiteHeartIcon, blackHeartIcon) }
+              onClick={ () => handleFavorite(tipo, detail, setFavorites, objImg) }
             >
               Favorite
             </button>
             <button
               type="button"
               data-testid="finish-recipe-btn"
-              onClick={ setDoneRecipe(true) }
+              onClick={ () => handleDoneRecipe(history, setDoneRecipes, doneRecipes) }
             >
               Finish recipe
             </button>
             <h4>Recomended Drinks</h4>
             <DetailCards typeOf={ tipo } />
           </div>
-
         ))}
         {!doneRecipe
             && (
@@ -174,7 +181,6 @@ function FoodInProgress() {
             <ul>
               {handleIngMeaDrink(Object.entries(item))}
             </ul>
-
             <button
               type="button"
               data-testid="share-btn"
@@ -185,14 +191,16 @@ function FoodInProgress() {
             <button
               type="button"
               data-testid="favorite-btn"
-              onClick={ handleFavorite(tipo, detail, favorites) }
+              id="favorite-btn"
+              src={ handleHeart(idProgress, favorites, whiteHeartIcon, blackHeartIcon) }
+              onClick={ () => handleFavorite(tipo, detail, setFavorites, objImg) }
             >
               Favorite
             </button>
             <button
               type="button"
               data-testid="finish-recipe-btn"
-              onClick={ setDoneRecipe(true) }
+              onClick={ () => handleDoneRecipe(history, setDoneRecipes, doneRecipes) }
             >
               Finish recipe
             </button>
@@ -218,11 +226,9 @@ function FoodInProgress() {
                 )
             )}
           </div>
-
         ))}
       </div>
     );
   }
 }
-
 export default FoodInProgress;

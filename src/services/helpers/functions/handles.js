@@ -66,3 +66,10 @@ export const handleHeart = (id, fav, white, black) => {
   }
   return black;
 };
+
+export const handleDoneRecipe = (history, setDoneRecipes, doneRecipes) => {
+  setDoneRecipes((prevState) => [...prevState, 'teste']);
+  console.log(doneRecipes);
+  window.localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+  // history.push('/done-recipes');
+};
