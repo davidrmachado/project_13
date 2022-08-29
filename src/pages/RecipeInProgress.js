@@ -17,7 +17,6 @@ function FoodInProgress() {
     tipo,
     detail,
     doneRecipe,
-    setDoneRecipe,
     startedRecipe,
     setTipo,
     setDetail,
@@ -25,6 +24,7 @@ function FoodInProgress() {
     setAlert,
     favorites,
     setFavorites,
+    doneRecipes,
     setDoneRecipes,
   } = useContext(AppContext);
   const objImg = { black: blackHeartIcon, white: whiteHeartIcon };
@@ -120,7 +120,7 @@ function FoodInProgress() {
             <button
               type="button"
               data-testid="finish-recipe-btn"
-              onClick={ () => handleDoneRecipe(setDoneRecipe, history, setDoneRecipes) }
+              onClick={ () => handleDoneRecipe(history, setDoneRecipes, doneRecipes) }
             >
               Finish recipe
             </button>
@@ -200,7 +200,7 @@ function FoodInProgress() {
             <button
               type="button"
               data-testid="finish-recipe-btn"
-              onClick={ () => handleDoneRecipe(setDoneRecipe, history, setDoneRecipes) }
+              onClick={ () => handleDoneRecipe(history, setDoneRecipes, doneRecipes) }
             >
               Finish recipe
             </button>

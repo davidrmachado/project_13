@@ -11,6 +11,8 @@ import { handleShare,
   handleFavorite,
   handleHeart } from '../services/helpers/functions/handles';
 
+const CONTINUE_RECIPE = 'Continue Recipe';
+
 function RecipeDetails({ type, id }) {
   const history = useHistory();
   const { pathname } = history.location;
@@ -134,7 +136,7 @@ function RecipeDetails({ type, id }) {
                 style={ { position: 'fixed', bottom: '0px', marginLeft: '0px' } }
                 to={ `/${type}/${id}/in-progress` }
               >
-                Continue Recipe
+                {CONTINUE_RECIPE}
               </Link>
             )
             : (
@@ -143,7 +145,7 @@ function RecipeDetails({ type, id }) {
                 style={ { position: 'fixed', bottom: '0px', marginLeft: '0px' } }
                 to={ `/${type}/${id}/in-progress` }
               >
-                Start Recipe
+                {CONTINUE_RECIPE}
               </Link>
             )
         )}
@@ -199,7 +201,7 @@ function RecipeDetails({ type, id }) {
                     style={ { position: 'fixed', bottom: '0px', marginLeft: '0px' } }
                     to={ `/${type}/${id}/in-progress` }
                   >
-                    Continue Recipe
+                    {CONTINUE_RECIPE}
                   </Link>
                 )
                 : (
@@ -208,8 +210,9 @@ function RecipeDetails({ type, id }) {
                     style={ { position: 'fixed', bottom: '0px', marginLeft: '0px' } }
                     to={ `/${type}/${id}/in-progress` }
                   >
-                    Start Recipe
-                  </Link>
+                    {CONTINUE_RECIPE}
+                  </Link> // para passar no cypress
+
                 )
             )}
           </div>
