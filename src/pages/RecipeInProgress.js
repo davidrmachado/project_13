@@ -1,51 +1,47 @@
 import React, { useContext, useEffect } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 import { foodDetailAPI } from '../services/foodAPI';
 import { drinkDetailAPI } from '../services/drinkAPI';
 import DetailCards from '../components/DetailCard';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-import { handleFavorite,
-  handleShare, handleHeart,
+import { handleFavorite, handleShare, handleHeart,
   handleDoneRecipe } from '../services/helpers/functions/handles';
 
 function FoodInProgress() {
-  const {
-    idProgress,
-    setidProgress,
-    tipo,
-    detail,
-    doneRecipe,
-    startedRecipe,
-    setTipo,
-    setDetail,
-    alert,
-    setAlert,
-    favorites,
-    setFavorites,
-    doneRecipes,
-    setDoneRecipes,
-  } = useContext(AppContext);
+  const { idProgress, setidProgress, tipo, detail,
+    setTipo, setDetail, alert, setAlert, favorites, setFavorites, doneRecipes,
+    setDoneRecipes } = useContext(AppContext);
   const objImg = { black: blackHeartIcon, white: whiteHeartIcon };
   const history = useHistory();
   const { pathname } = history.location;
-
   async function getFoodDetails() {
     const id = pathname.replace(/\D/g, '');
     const { meals } = await foodDetailAPI(id);
     setDetail(meals);
     setidProgress(id);
   }
-
   async function getDrinkDetails() {
     const id = pathname.replace(/\D/g, '');
     const { drinks } = await drinkDetailAPI(id);
     setidProgress(id);
     setDetail(drinks);
   }
-
+  const createInProgressRecipesStorage = () => {
+    const id = pathname.replace(/\D/g, '');
+    const inProgressRecipesObject = {
+      meals: { [id]: [] },
+      cocktails: { [id]: [] },
+    };
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (inProgressRecipes === null) {
+      localStorage.setItem('inProgressRecipes', JSON
+        .stringify(inProgressRecipesObject));
+    }
+  };
   useEffect(() => {
+    createInProgressRecipesStorage();
     if (pathname.includes('foods')) {
       setTipo('foods');
       getFoodDetails();
@@ -54,7 +50,52 @@ function FoodInProgress() {
       getDrinkDetails();
     }
   }, []);
-
+  const CheckinFoods = (index) => {
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const id = pathname.replace(/\D/g, '');
+    if (inProgressRecipes.meals[id] === undefined) {
+      return false;
+    }
+    if (inProgressRecipes.meals[id].includes(index)) {
+      return true;
+    }
+    if (!inProgressRecipes.meals[id].includes(index)) {
+      return false;
+    }
+  };
+  const CheckinDrinks = (index) => {
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const id = pathname.replace(/\D/g, '');
+    if (inProgressRecipes.cocktails[id] === undefined) {
+      return false;
+    }
+    if (inProgressRecipes.cocktails[id].includes(index)) {
+      return true;
+    }
+    if (!inProgressRecipes.cocktails[id].includes(index)) {
+      return false;
+    }
+  };
+  const handleCheckbox = (index) => {
+    const id = pathname.replace(/\D/g, '');
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const { meals, cocktails } = inProgressRecipes;
+    if (tipo === 'foods') {
+      const obj = { meals: {
+        ...meals, [id]: [...meals[id], index] },
+      cocktails: { ...cocktails } };
+      localStorage.setItem('inProgressRecipes', JSON
+        .stringify(obj));
+      CheckinFoods(index);
+    } else {
+      const obj = {
+        meals: { ...meals },
+        cocktails: { ...cocktails, [id]: [...cocktails[id], index] } };
+      localStorage.setItem('inProgressRecipes', JSON
+        .stringify(obj));
+      CheckinDrinks(index);
+    }
+  };
   const handleIngMeaDrink = (data) => {
     const filteredIngredients = data.filter((key) => key[0]
       .includes('strIngredient') && (key[1] !== null && key[1] !== ''));
@@ -70,13 +111,13 @@ function FoodInProgress() {
             key={ index }
             id={ index }
             type="checkbox"
-            // onChange={ handleCheckbox }
+            onChange={ () => handleCheckbox(index) }
+            checked={ tipo === 'foods' ? CheckinFoods(index) : CheckinDrinks(index) }
           />
           {string}
         </li>
       )));
   };
-
   if (pathname.includes('foods')) {
     return (
       <div>
@@ -130,36 +171,6 @@ function FoodInProgress() {
             <DetailCards typeOf={ tipo } />
           </div>
         ))}
-        {!doneRecipe
-            && (
-              startedRecipe
-                ? (
-                  <Link
-                    to={ `/${tipo}/${idProgress}/in-progress` }
-                  >
-                    <button
-                      type="button"
-                      // onClick={ handleCheckbox }
-                      data-testid="start-recipe-btn"
-                    >
-                      Continue Recipe
-                    </button>
-                  </Link>
-                )
-                : (
-                  <Link
-                    to={ `/${tipo}/${idProgress}/in-progress` }
-                  >
-                    <button
-                      type="button"
-                      // onClick={ handleCheckbox }
-                      data-testid="start-recipe-btn"
-                    >
-                      Start Recipe
-                    </button>
-                  </Link>
-                )
-            )}
       </div>
     );
   }
@@ -217,26 +228,6 @@ function FoodInProgress() {
               Finish recipe
             </button>
             <DetailCards typeOf={ tipo } />
-            {!doneRecipe
-            && (
-              startedRecipe
-                ? (
-                  <Link
-                    data-testid="start-recipe-btn"
-                    to={ `/${tipo}/${idProgress}/in-progress` }
-                  >
-                    Continue Recipe
-                  </Link>
-                )
-                : (
-                  <Link
-                    data-testid="start-recipe-btn"
-                    to={ `/${tipo}/${idProgress}/in-progress` }
-                  >
-                    Start Recipe
-                  </Link>
-                )
-            )}
           </div>
         ))}
       </div>
