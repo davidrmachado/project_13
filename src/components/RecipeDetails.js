@@ -6,12 +6,13 @@ import AppContext from '../context/AppContext';
 import { drinkDetailAPI } from '../services/drinkAPI';
 import DetailCards from './DetailCard';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import {
+  startOrContinueMeals,
+  startOrContinueCocktails, handleStartRecipe } from '../services/handlers';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { handleShare,
   handleFavorite,
   handleHeart } from '../services/helpers/functions/handles';
-
-const CONTINUE_RECIPE = 'Continue Recipe';
 
 function RecipeDetails({ type, id }) {
   const history = useHistory();
@@ -28,13 +29,27 @@ function RecipeDetails({ type, id }) {
     setAlert,
     setFavorites,
     favorites,
+    setStartedRecipe,
   } = useContext(AppContext);
+
+  const createInProgressRecipesStorage = () => {
+    const inProgressRecipesObject = {
+      meals: {},
+      cocktails: {},
+    };
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (inProgressRecipes === null) {
+      localStorage.setItem('inProgressRecipes', JSON
+        .stringify(inProgressRecipesObject));
+    }
+  };
 
   async function getFoodDetails() {
     const { meals } = await foodDetailAPI(id);
     setDetail(meals);
     setidProgress(id);
   }
+
   async function getDrinkDetails() {
     const { drinks } = await drinkDetailAPI(id);
     setidProgress(id);
@@ -42,12 +57,15 @@ function RecipeDetails({ type, id }) {
   }
 
   useEffect(() => {
+    createInProgressRecipesStorage();
     if (type === 'foods') {
       setTipo('foods');
       getFoodDetails();
+      startOrContinueMeals(id, setStartedRecipe);
     } else if (type === 'drinks') {
       setTipo('drinks');
       getDrinkDetails();
+      startOrContinueCocktails(id, setStartedRecipe);
     }
   }, []);
 
@@ -136,16 +154,17 @@ function RecipeDetails({ type, id }) {
                 style={ { position: 'fixed', bottom: '0px', marginLeft: '0px' } }
                 to={ `/${type}/${id}/in-progress` }
               >
-                {CONTINUE_RECIPE}
+                Continue Recipe
               </Link>
             )
             : (
               <Link
                 data-testid="start-recipe-btn"
+                onClick={ () => handleStartRecipe(id, type) }
                 style={ { position: 'fixed', bottom: '0px', marginLeft: '0px' } }
                 to={ `/${type}/${id}/in-progress` }
               >
-                {CONTINUE_RECIPE}
+                Start Recipe
               </Link>
             )
         )}
@@ -201,18 +220,18 @@ function RecipeDetails({ type, id }) {
                     style={ { position: 'fixed', bottom: '0px', marginLeft: '0px' } }
                     to={ `/${type}/${id}/in-progress` }
                   >
-                    {CONTINUE_RECIPE}
+                    Continue Recipe
                   </Link>
                 )
                 : (
                   <Link
+                    onClick={ () => handleStartRecipe(id, type) }
                     data-testid="start-recipe-btn"
                     style={ { position: 'fixed', bottom: '0px', marginLeft: '0px' } }
                     to={ `/${type}/${id}/in-progress` }
                   >
-                    {CONTINUE_RECIPE}
+                    Start Recipe
                   </Link> // para passar no cypress
-
                 )
             )}
           </div>

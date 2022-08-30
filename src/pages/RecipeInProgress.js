@@ -68,7 +68,9 @@ function FoodInProgress() {
         <li key={ index } data-testid={ `${index}-ingredient-step` }>
           <input
             key={ index }
+            id={ index }
             type="checkbox"
+            // onChange={ handleCheckbox }
           />
           {string}
         </li>
@@ -133,18 +135,28 @@ function FoodInProgress() {
               startedRecipe
                 ? (
                   <Link
-                    data-testid="start-recipe-btn"
                     to={ `/${tipo}/${idProgress}/in-progress` }
                   >
-                    Continue Recipe
+                    <button
+                      type="button"
+                      // onClick={ handleCheckbox }
+                      data-testid="start-recipe-btn"
+                    >
+                      Continue Recipe
+                    </button>
                   </Link>
                 )
                 : (
                   <Link
-                    data-testid="start-recipe-btn"
                     to={ `/${tipo}/${idProgress}/in-progress` }
                   >
-                    Start Recipe
+                    <button
+                      type="button"
+                      // onClick={ handleCheckbox }
+                      data-testid="start-recipe-btn"
+                    >
+                      Start Recipe
+                    </button>
                   </Link>
                 )
             )}

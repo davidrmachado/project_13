@@ -6,8 +6,6 @@ import RecipeDetails from '../components/RecipeDetails';
 function FoodDetails() {
   const {
     setTitle,
-    // idProgress,
-    // setidProgress,
   } = useContext(AppContext);
 
   const history = useHistory();
@@ -17,8 +15,6 @@ function FoodDetails() {
   useEffect(() => {
     document.title = 'Food Details';
     setTitle(document.title);
-    // const id = pathname.replace(/\D/g, '');
-    // setidProgress(id);
   }, []);
 
   return (

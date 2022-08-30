@@ -13,6 +13,7 @@ function AppProvider({ children }) {
   const [globalRecipes, setGlobalRecipes] = useState({});
   const [tipo, setTipo] = useState();
   const [idProgress, setidProgress] = useState();
+  const [inProgressRecipes, setInProgressRecipes] = useState([]);
   const [alert, setAlert] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const [doneRecipes, setDoneRecipes] = useState([]);
@@ -38,6 +39,8 @@ function AppProvider({ children }) {
     setDoneRecipe,
     startedRecipe,
     setStartedRecipe,
+    inProgressRecipes,
+    setInProgressRecipes,
     alert,
     setAlert,
     favorites,
