@@ -60,7 +60,7 @@ export const handleFavorite = (typer) => {
   }
 };
 
-export const handleStartRecipe = (recipeId) => {
+export const handleStartRecipe = (recipeId, type) => {
   const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
   const { meals, cocktails } = inProgressRecipes;
@@ -72,5 +72,25 @@ export const handleStartRecipe = (recipeId) => {
     const obj = { meals: { ...meals }, cocktails: { ...cocktails, [recipeId]: [] } };
     localStorage.setItem('inProgressRecipes', JSON
       .stringify(obj));
+  }
+};
+
+export const startOrContinueMeals = (id, setStart) => {
+  const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  const { meals } = inProgressRecipes;
+  if (meals[id] === undefined) {
+    setStart(false);
+  } else {
+    setStart(true);
+  }
+};
+
+export const startOrContinueCocktails = (id, setStart) => {
+  const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  const { cocktails } = inProgressRecipes;
+  if (cocktails[id] === undefined) {
+    setStart(false);
+  } else {
+    setStart(true);
   }
 };

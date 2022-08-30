@@ -14,6 +14,9 @@ function AppProvider({ children }) {
   const [tipo, setTipo] = useState();
   const [idProgress, setidProgress] = useState();
   const [inProgressRecipes, setInProgressRecipes] = useState([]);
+  const [alert, setAlert] = useState(false);
+  const [favorites, setFavorites] = useState([]);
+  const [doneRecipes, setDoneRecipes] = useState([]);
 
   const context = {
     idProgress,
@@ -38,6 +41,12 @@ function AppProvider({ children }) {
     setStartedRecipe,
     inProgressRecipes,
     setInProgressRecipes,
+    alert,
+    setAlert,
+    favorites,
+    setFavorites,
+    doneRecipes,
+    setDoneRecipes,
   };
 
   return (
