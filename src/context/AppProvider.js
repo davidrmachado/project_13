@@ -17,8 +17,14 @@ function AppProvider({ children }) {
   const [alert, setAlert] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const [doneRecipes, setDoneRecipes] = useState([]);
+  const [check, setCheck] = useState();
+  const [indd, setIndd] = useState();
 
   const context = {
+    setIndd,
+    indd,
+    check,
+    setCheck,
     idProgress,
     setidProgress,
     tipo,
