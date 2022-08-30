@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import { foodDetailAPI } from '../services/foodAPI';
@@ -9,7 +9,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { handleShare,
   handleFavorite,
-  handleHeart } from '../services/helpers/functions/handles';
+} from '../services/helpers/functions/handles';
 
 const CONTINUE_RECIPE = 'Continue Recipe';
 
@@ -26,6 +26,8 @@ function RecipeDetails({ type, id }) {
     alert, setAlert,
     setFavorites, favorites,
   } = useContext(AppContext);
+  const fav = JSON.parse(window.localStorage.getItem('favoriteRecipes'));
+  console.log(fav);
   async function getFoodDetails() {
     const { meals } = await foodDetailAPI(id);
     setDetail(meals);
@@ -139,14 +141,17 @@ function RecipeDetails({ type, id }) {
           Share
         </button>
         <button
-          data-testid="favorite-btn"
           type="button"
-          id="favorite-btn"
           style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
-          src={ handleHeart(id, whiteHeartIcon, blackHeartIcon, favorites) }
           onClick={ () => handleFavorite(type, detail, setFavorites, objImg) }
         >
-          Favorite
+          <img
+            data-testid="favorite-btn"
+            id="favorite-btn"
+            src={ fav[0].id.includes(id) ? blackHeartIcon : whiteHeartIcon }
+            // src={ handleHeart(id, whiteHeartIcon, blackHeartIcon, favorites) }
+            alt="favorite icon"
+          />
         </button>
       </div>
     );
@@ -209,7 +214,7 @@ function RecipeDetails({ type, id }) {
           type="button"
           id="favorite-btn"
           style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
-          src={ handleHeart(id, whiteHeartIcon, blackHeartIcon, favorites) }
+          src={ fav.includes(id) ? blackHeartIcon : whiteHeartIcon }
           onClick={ () => handleFavorite(type, detail, setFavorites, objImg) }
         >
           Favorite
