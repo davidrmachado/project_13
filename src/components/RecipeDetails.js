@@ -20,16 +20,12 @@ function RecipeDetails({ type, id }) {
   const {
     setTipo,
     setidProgress,
-    detail,
-    setDetail,
+    detail, setDetail,
     startedRecipe,
     doneRecipe,
-    alert,
-    setAlert,
-    setFavorites,
-    favorites,
+    alert, setAlert,
+    setFavorites, favorites,
   } = useContext(AppContext);
-
   async function getFoodDetails() {
     const { meals } = await foodDetailAPI(id);
     setDetail(meals);
@@ -40,7 +36,7 @@ function RecipeDetails({ type, id }) {
     setidProgress(id);
     setDetail(drinks);
   }
-
+  console.log(document.getElementById('favorite-btn'));
   useEffect(() => {
     if (type === 'foods') {
       setTipo('foods');
@@ -109,24 +105,7 @@ function RecipeDetails({ type, id }) {
             <DetailCards typeOf={ type } />
             <h4>YouTube Video</h4>
             {handleYoutube(item.strYoutube)}
-            <button
-              data-testid="share-btn"
-              style={ { position: 'fixed', bottom: '0px', marginLeft: '290px' } }
-              type="button"
-              onClick={ () => handleShare(pathname, setAlert) }
-            >
-              Share
-            </button>
-            <button
-              data-testid="favorite-btn"
-              type="button"
-              id="favorite-btn"
-              style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
-              src={ handleHeart(id, favorites, whiteHeartIcon, blackHeartIcon) }
-              onClick={ () => handleFavorite(type, detail, setFavorites, objImg) }
-            >
-              Favorite
-            </button>
+
             {!doneRecipe
         && (
           startedRecipe
@@ -151,6 +130,24 @@ function RecipeDetails({ type, id }) {
         )}
           </div>
         ))}
+        <button
+          data-testid="share-btn"
+          style={ { position: 'fixed', bottom: '0px', marginLeft: '290px' } }
+          type="button"
+          onClick={ () => handleShare(pathname, setAlert) }
+        >
+          Share
+        </button>
+        <button
+          data-testid="favorite-btn"
+          type="button"
+          id="favorite-btn"
+          style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
+          src={ handleHeart(id, whiteHeartIcon, blackHeartIcon, favorites) }
+          onClick={ () => handleFavorite(type, detail, setFavorites, objImg) }
+        >
+          Favorite
+        </button>
       </div>
     );
   } if (type === 'drinks') {
@@ -174,24 +171,6 @@ function RecipeDetails({ type, id }) {
             <h4>Ingridients</h4>
             <ul>{handleIngMeaDrink(Object.entries(item))}</ul>
             <DetailCards typeOf={ type } />
-            <button
-              data-testid="share-btn"
-              style={ { position: 'fixed', bottom: '0px', marginLeft: '300px' } }
-              type="button"
-              onClick={ () => handleShare(pathname, setAlert) }
-            >
-              Share
-            </button>
-            <button
-              data-testid="favorite-btn"
-              type="button"
-              id="favorite-btn"
-              style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
-              src={ handleHeart(id, favorites, whiteHeartIcon, blackHeartIcon) }
-              onClick={ () => handleFavorite(type, detail, setFavorites, objImg) }
-            >
-              Favorite
-            </button>
             {!doneRecipe
             && (
               startedRecipe
@@ -217,6 +196,24 @@ function RecipeDetails({ type, id }) {
             )}
           </div>
         ))}
+        <button
+          data-testid="share-btn"
+          style={ { position: 'fixed', bottom: '0px', marginLeft: '300px' } }
+          type="button"
+          onClick={ () => handleShare(pathname, setAlert) }
+        >
+          Share
+        </button>
+        <button
+          data-testid="favorite-btn"
+          type="button"
+          id="favorite-btn"
+          style={ { position: 'fixed', bottom: '0px', marginLeft: '150px' } }
+          src={ handleHeart(id, whiteHeartIcon, blackHeartIcon, favorites) }
+          onClick={ () => handleFavorite(type, detail, setFavorites, objImg) }
+        >
+          Favorite
+        </button>
       </div>
     );
   }

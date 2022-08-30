@@ -59,9 +59,8 @@ export const handleFavorite = (type, array, setFav, objImg) => {
   }
 };
 
-export const handleHeart = (id, fav, white, black) => {
-  const checked = fav.includes(id);
-  if (checked) {
+export const handleHeart = (id, white, black, fav) => {
+  if (!fav.includes(id)) {
     return white;
   }
   return black;
