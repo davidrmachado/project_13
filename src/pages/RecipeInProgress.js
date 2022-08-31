@@ -10,9 +10,9 @@ import { handleFavorite, handleShare, handleHeart,
   handleDoneRecipe } from '../services/helpers/functions/handles';
 
 function FoodInProgress() {
-  const { idProgress, setidProgress, tipo, detail,
-    setTipo, setDetail, alert, setAlert, favorites, setFavorites, doneRecipes,
-    setDoneRecipes } = useContext(AppContext);
+  const { setCheck, idProgress, setidProgress, tipo, detail, ingredientsList,
+    setTipo, setDetail, alert, setAlert, favorites, setFavorites, doneRecipes, finished,
+    setDoneRecipes, setFinished, setIngredientsList } = useContext(AppContext);
   const objImg = { black: blackHeartIcon, white: whiteHeartIcon };
   const history = useHistory();
   const { pathname } = history.location;
@@ -57,9 +57,11 @@ function FoodInProgress() {
       return false;
     }
     if (inProgressRecipes.meals[id].includes(index)) {
+      setCheck(true);
       return true;
     }
     if (!inProgressRecipes.meals[id].includes(index)) {
+      setCheck(false);
       return false;
     }
   };
@@ -70,10 +72,24 @@ function FoodInProgress() {
       return false;
     }
     if (inProgressRecipes.cocktails[id].includes(index)) {
+      setCheck(true);
       return true;
     }
     if (!inProgressRecipes.cocktails[id].includes(index)) {
+      setCheck(false);
       return false;
+    }
+  };
+  const Finished = () => {
+    const inProgressReci = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const id = pathname.replace(/\D/g, '');
+    if (tipo === 'foods') {
+      if (ingredientsList === inProgressReci.meals[id].length) { setFinished(false); }
+      if (ingredientsList !== inProgressReci.meals[id].length) { setFinished(true); }
+    }
+    if (tipo === 'drinks') {
+      if (ingredientsList === inProgressReci.cocktails[id].length) { setFinished(false); }
+      if (ingredientsList !== inProgressReci.cocktails[id].length) { setFinished(true); }
     }
   };
   const handleCheckbox = (index) => {
@@ -95,6 +111,7 @@ function FoodInProgress() {
         .stringify(obj));
       CheckinDrinks(index);
     }
+    Finished();
   };
   const handleIngMeaDrink = (data) => {
     const filteredIngredients = data.filter((key) => key[0]
@@ -104,6 +121,7 @@ function FoodInProgress() {
       .includes('strMeasure') && (key[1] !== null && key[1] !== ' '));
     const meaArray = filteredMeasures.reduce((acc, value) => [...acc, value[1]], []);
     const arrayToMap = ingArray.map((ing, index) => `${ing} - ${meaArray[index]}`);
+    setIngredientsList(arrayToMap.length);
     return (
       arrayToMap.map((string, index) => (
         <li key={ index } data-testid={ `${index}-ingredient-step` }>
@@ -137,13 +155,9 @@ function FoodInProgress() {
             </p>
             {alert && <p>Link copied!</p>}
             <h4> Intructions </h4>
-            <p data-testid="instructions">
-              {item.strInstructions}
-            </p>
+            <p data-testid="instructions">{item.strInstructions}</p>
             <h4>Ingridients</h4>
-            <ul>
-              {handleIngMeaDrink(Object.entries(item))}
-            </ul>
+            <ul>{handleIngMeaDrink(Object.entries(item))}</ul>
             <button
               type="button"
               data-testid="share-btn"
@@ -164,6 +178,7 @@ function FoodInProgress() {
               type="button"
               data-testid="finish-recipe-btn"
               onClick={ () => handleDoneRecipe(history, setDoneRecipes, doneRecipes) }
+              disabled={ finished }
             >
               Finish recipe
             </button>
@@ -189,21 +204,13 @@ function FoodInProgress() {
             />
             {alert && <p>Link copied!</p>}
             <h4>Is alcoholic?</h4>
-            <p>
-              {item.strAlcoholic}
-            </p>
+            <p>{item.strAlcoholic}</p>
             <h4>Category</h4>
-            <p data-testid="recipe-category">
-              {item.strCategory}
-            </p>
+            <p data-testid="recipe-category">{item.strCategory}</p>
             <h4> Intructions </h4>
-            <p data-testid="instructions">
-              {item.strInstructions}
-            </p>
+            <p data-testid="instructions">{item.strInstructions}</p>
             <h4>Ingridients</h4>
-            <ul>
-              {handleIngMeaDrink(Object.entries(item))}
-            </ul>
+            <ul>{handleIngMeaDrink(Object.entries(item))}</ul>
             <button
               type="button"
               data-testid="share-btn"
@@ -224,6 +231,7 @@ function FoodInProgress() {
               type="button"
               data-testid="finish-recipe-btn"
               onClick={ () => handleDoneRecipe(history, setDoneRecipes, doneRecipes) }
+              disabled={ finished }
             >
               Finish recipe
             </button>
