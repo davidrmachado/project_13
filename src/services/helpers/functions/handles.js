@@ -18,9 +18,7 @@ export const handleShare = (pathname, func) => {
 
 export const handleFavorite = (type, array, setFav, objImg) => {
   const favoriteButton = document.getElementById('favorite-btn');
-  const { attributes } = favoriteButton;
-  const { src } = attributes;
-  const { nodeValue } = src;
+  const { nodeValue } = favoriteButton.attributes.src;
 
   if (type === 'drinks') {
     const localStorage = array.map((recipe) => (
@@ -59,12 +57,11 @@ export const handleFavorite = (type, array, setFav, objImg) => {
   }
 };
 
-export const handleHeart = (id, fav, white, black) => {
-  const checked = fav.includes(id);
-  if (checked) {
-    return white;
+export const handleHeart = (id, white, black, fav) => {
+  if (fav.includes(id)) {
+    return black;
   }
-  return black;
+  return white;
 };
 
 export const handleDoneRecipe = (history, setDoneRecipes, doneRecipes) => {

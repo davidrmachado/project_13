@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import clipboardCopy from 'clipboard-copy';
-import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import DetailCards from './DetailCard';
 import { drinkDetailAPI } from '../services/drinkAPI';
@@ -96,7 +96,6 @@ function RecipeDetails({ url, id }) {
               src={ `${e.strDrinkThumb}` }
               alt="Bebida"
             />
-
             <p data-testid="recipe-category">
               {`Category: ${e.strCategory} ${e.strAlcoholic}`}
             </p>
@@ -136,7 +135,6 @@ function RecipeDetails({ url, id }) {
               src={ `${e.strMealThumb}` }
               alt="Bebida"
             />
-
             <p data-testid="recipe-category">
               {`Category: ${e.strCategory} ${e.strAlcoholic}`}
             </p>
