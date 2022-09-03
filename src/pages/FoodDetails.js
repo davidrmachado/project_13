@@ -1,32 +1,35 @@
 import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+// import { useHistory } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 import RecipeDetails from '../components/RecipeDetails';
 
-function FoodDetails() {
+function FoodDetails({ location, match }) {
   const {
     setTitle,
-    // idProgress,
-    // setidProgress,
   } = useContext(AppContext);
 
-  const history = useHistory();
-  const { pathname } = history.location;
-  const id = pathname.replace(/\D/g, '');
+  // const history = useHistory();
+  // const { pathname } = history.location;
+  // const id = pathname.replace(/\D/g, '');
 
   useEffect(() => {
     document.title = 'Food Details';
     setTitle(document.title);
-    // const id = pathname.replace(/\D/g, '');
-    // setidProgress(id);
   }, []);
 
   return (
     <div>
       <h1>{ document.title }</h1>
-      <RecipeDetails type="foods" id={ id } />
+      <RecipeDetails url={ location.pathname } id={ match.params.id } />
     </div>
   );
 }
+
+FoodDetails.propTypes = {
+  location: PropTypes.shape({}),
+  match: PropTypes.shape({}),
+}.isRequired;
 
 export default FoodDetails;

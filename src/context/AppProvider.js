@@ -13,11 +13,21 @@ function AppProvider({ children }) {
   const [globalRecipes, setGlobalRecipes] = useState({});
   const [tipo, setTipo] = useState();
   const [idProgress, setidProgress] = useState();
+  const [inProgressRecipes, setInProgressRecipes] = useState([]);
   const [alert, setAlert] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const [doneRecipes, setDoneRecipes] = useState([]);
+  const [check, setCheck] = useState(true);
+  const [finished, setFinished] = useState(true);
+  const [ingredientsList, setIngredientsList] = useState();
 
   const context = {
+    finished,
+    setFinished,
+    ingredientsList,
+    setIngredientsList,
+    check,
+    setCheck,
     idProgress,
     setidProgress,
     tipo,
@@ -38,6 +48,8 @@ function AppProvider({ children }) {
     setDoneRecipe,
     startedRecipe,
     setStartedRecipe,
+    inProgressRecipes,
+    setInProgressRecipes,
     alert,
     setAlert,
     favorites,

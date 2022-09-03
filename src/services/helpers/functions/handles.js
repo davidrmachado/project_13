@@ -68,5 +68,5 @@ export const handleDoneRecipe = (history, setDoneRecipes, doneRecipes) => {
   setDoneRecipes((prevState) => [...prevState, 'teste']);
   console.log(doneRecipes);
   window.localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-  // history.push('/done-recipes');
+  history.push('/done-recipes');
 };
